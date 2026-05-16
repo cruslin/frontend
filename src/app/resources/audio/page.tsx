@@ -73,6 +73,50 @@ export default function AudioArchivePage() {
         </div>
       </section>
 
+      {/* Spotify Podcasts Section */}
+      <SectionWrapper variant="white" className="py-12">
+        <div className="max-w-4xl mx-auto">
+          <FadeIn>
+            <h2 className="font-heading text-3xl font-bold mb-2" style={{ color: '#31333B' }}>
+              Podcasts
+            </h2>
+            <p className="font-body text-base mb-8" style={{ color: '#8A8A8E' }}>
+              Listen to our podcasts on Spotify
+            </p>
+          </FadeIn>
+          <div className="flex flex-col gap-8">
+            <div>
+              <h3 className="font-heading text-lg font-semibold mb-3" style={{ color: '#31333B' }}>
+                The Ecclesia Embassy Podcast
+              </h3>
+              <iframe
+                style={{ borderRadius: '12px' }}
+                src="https://open.spotify.com/embed/show/38f94eSitKoPzXLUunJRV4?utm_source=generator"
+                width="100%"
+                height="352"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <h3 className="font-heading text-lg font-semibold mb-3" style={{ color: '#31333B' }}>
+                The Victor Oluwadamilare Podcast
+              </h3>
+              <iframe
+                style={{ borderRadius: '12px' }}
+                src="https://open.spotify.com/embed/show/1hiBj66Ggd8GvfQVV9aQRC?utm_source=generator"
+                width="100%"
+                height="352"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </SectionWrapper>
+
       {/* Search & Sort Section */}
       <SectionWrapper variant="off-white" className="py-8">
         <div className="max-w-4xl mx-auto flex flex-col gap-4 md:flex-row md:items-end md:gap-4">

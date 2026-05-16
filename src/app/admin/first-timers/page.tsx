@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { firstTimer, squads, cith } from "@/lib/api";
@@ -441,7 +441,7 @@ export default function AdminFirstTimersPage() {
                   onChange={(e) =>
                     setEditData({ ...editData, growthTrack: e.target.value })
                   }
-                  className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                  className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                 >
                   <option value="">Select a growth track</option>
                   <option value="FOUNDATION_CLASS">Foundation Class</option>
@@ -462,7 +462,7 @@ export default function AdminFirstTimersPage() {
                   onChange={(e) =>
                     setEditData({ ...editData, assignedSquad: e.target.value })
                   }
-                  className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                  className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                 >
                   <option value="">No squad assigned</option>
                   {squadList.map((s) => (
@@ -482,7 +482,7 @@ export default function AdminFirstTimersPage() {
                   onChange={(e) =>
                     setEditData({ ...editData, assignedHub: e.target.value })
                   }
-                  className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                  className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                 >
                   <option value="">No hub assigned</option>
                   {hubList.map((h) => (

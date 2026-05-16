@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
@@ -96,7 +96,7 @@ export default function NewConvertPage() {
           <div className="mx-auto max-w-3xl text-center">
             <h2
               className="font-heading text-3xl font-bold mb-3"
-              style={{ color: "#4A1D6E" }}
+              style={{ color: "#0E0B1E" }}
             >
               A Message For You
             </h2>
@@ -122,7 +122,7 @@ export default function NewConvertPage() {
         <FadeIn>
           <h2
             className="font-heading text-3xl font-bold text-center mb-4"
-            style={{ color: "#4A1D6E" }}
+            style={{ color: "#0E0B1E" }}
           >
             Your Growth Journey
           </h2>
@@ -137,14 +137,14 @@ export default function NewConvertPage() {
           <StaggerItem>
             <div
               className="p-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg h-full"
-              style={{ backgroundColor: "#E4E0EF" }}
+              style={{ backgroundColor: "#E8E6F0" }}
             >
               <div className="flex justify-center mb-4">
-                <BookOpen size={40} style={{ color: "#771996" }} />
+                <BookOpen size={40} style={{ color: "#C9A84C" }} />
               </div>
               <h3
                 className="font-heading text-lg font-bold mb-2"
-                style={{ color: "#4A1D6E" }}
+                style={{ color: "#0E0B1E" }}
               >
                 Foundation Class
               </h3>
@@ -158,14 +158,14 @@ export default function NewConvertPage() {
           <StaggerItem>
             <div
               className="p-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg h-full"
-              style={{ backgroundColor: "#E4E0EF" }}
+              style={{ backgroundColor: "#E8E6F0" }}
             >
               <div className="flex justify-center mb-4">
-                <Heart size={40} style={{ color: "#771996" }} />
+                <Heart size={40} style={{ color: "#C9A84C" }} />
               </div>
               <h3
                 className="font-heading text-lg font-bold mb-2"
-                style={{ color: "#4A1D6E" }}
+                style={{ color: "#0E0B1E" }}
               >
                 Discipleship
               </h3>
@@ -179,14 +179,14 @@ export default function NewConvertPage() {
           <StaggerItem>
             <div
               className="p-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg h-full"
-              style={{ backgroundColor: "#E4E0EF" }}
+              style={{ backgroundColor: "#E8E6F0" }}
             >
               <div className="flex justify-center mb-4">
-                <Users size={40} style={{ color: "#771996" }} />
+                <Users size={40} style={{ color: "#C9A84C" }} />
               </div>
               <h3
                 className="font-heading text-lg font-bold mb-2"
-                style={{ color: "#4A1D6E" }}
+                style={{ color: "#0E0B1E" }}
               >
                 Join a Squad
               </h3>
@@ -200,14 +200,14 @@ export default function NewConvertPage() {
           <StaggerItem>
             <div
               className="p-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg h-full"
-              style={{ backgroundColor: "#E4E0EF" }}
+              style={{ backgroundColor: "#E8E6F0" }}
             >
               <div className="flex justify-center mb-4">
-                <MapPin size={40} style={{ color: "#771996" }} />
+                <MapPin size={40} style={{ color: "#C9A84C" }} />
               </div>
               <h3
                 className="font-heading text-lg font-bold mb-2"
-                style={{ color: "#4A1D6E" }}
+                style={{ color: "#0E0B1E" }}
               >
                 CITH Hub
               </h3>
@@ -335,7 +335,7 @@ export default function NewConvertPage() {
                         name="preferredSquad"
                         value={formData.preferredSquad}
                         onChange={handleInputChange}
-                        className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                        className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                       >
                         <option value="">Select a squad (optional)</option>
                         {squadList.map((s: any) => (
@@ -356,7 +356,7 @@ export default function NewConvertPage() {
                         name="preferredHub"
                         value={formData.preferredHub}
                         onChange={handleInputChange}
-                        className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                        className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                       >
                         <option value="">Select a CITH hub (optional)</option>
                         {hubList.map((h: any) => (

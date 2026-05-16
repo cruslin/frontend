@@ -1,11 +1,22 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
-import { Menu, X, Search, ChevronDown, User, LogOut, LayoutDashboard, Settings, Shield } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import {
+  ChevronDown,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Shield,
+  User,
+  X,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth-context";
+import { buttonClasses } from "@/components/ui/button-styles";
 
 const navLinks = [
   { label: "HOME", href: "/" },
@@ -39,7 +50,6 @@ const navLinks = [
     ],
   },
   { label: "LIVESTREAM", href: "/live" },
-  { label: "GIVE", href: "/give" },
   { label: "ECCLESIA NATION", href: "/nation" },
   {
     label: "GROW",
@@ -51,11 +61,11 @@ const navLinks = [
     ],
   },
   {
-    label: "KINGDOM",
-    href: "/kingdom",
+    label: "KINGDOM EXPRESSIONS",
+    href: "/kingdom-expressions",
     children: [
-      { label: "Kingdom Life Squads", href: "/kingdom/squads" },
-      { label: "Kingdom Influencing Platform", href: "/kingdom/kip" },
+      { label: "Kingdom Life Squads", href: "/kingdom-expressions/squads" },
+      { label: "Kingdom Influencing Platform", href: "/kingdom-expressions/kip" },
     ],
   },
   {
@@ -70,293 +80,435 @@ const navLinks = [
   { label: "CONTACT", href: "/contact" },
 ];
 
+const utilityLinks = [
+  { label: "Plan Your Visit", href: "/new-here" },
+  { label: "Watch Live", href: "/live" },
+];
+
+function isActivePath(pathname: string, href: string) {
+  if (href === "/") {
+    return pathname === "/";
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export default function Navbar() {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { user, logout } = useAuth();
+  const closeMenus = () => {
+    setMobileOpen(false);
+    setOpenDropdown(null);
+    setUserMenuOpen(false);
+  };
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 12);
+    const handlePointerDown = (event: MouseEvent) => {
+      if (
+        userMenuRef.current &&
+        event.target instanceof Node &&
+        !userMenuRef.current.contains(event.target)
+      ) {
+        setUserMenuOpen(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handlePointerDown);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handlePointerDown);
+    };
   }, []);
 
-  // Lock body scroll when mobile menu open
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+
+    return () => {
       document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
+    };
   }, [mobileOpen]);
 
   return (
     <>
-      {/* Top header bar — logo area */}
-      <header className="bg-slate">
-        <div className="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-5 sm:px-6 md:px-8">
-          <Link href="/" className="font-heading text-2xl font-bold text-white md:text-[42px] md:leading-[48px] transition-opacity hover:opacity-90">
-            The Ecclesia Embassy
-          </Link>
-          <div className="flex items-center gap-4">
-            {user ? (
-              <div className="relative z-[60]" ref={userMenuRef}>
-                <button
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 text-white/80 hover:text-white transition-colors"
-                >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-vivid">
-                    <User className="h-4 w-4 text-white" />
-                  </div>
-                  <span className="hidden sm:block font-body text-sm">
-                    {user.profile?.firstName || "Account"}
-                  </span>
-                  <ChevronDown size={14} className="hidden sm:block" />
-                </button>
-
-                {userMenuOpen && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
-                    <div className="absolute right-0 top-full mt-2 z-50 w-48 rounded-[8px] bg-white shadow-lg border border-gray-border overflow-hidden">
-                      <div className="px-4 py-3 border-b border-gray-border">
-                        <p className="font-heading text-sm font-semibold text-slate truncate">
-                          {user.profile?.firstName} {user.profile?.lastName}
-                        </p>
-                        <p className="font-body text-[11px] text-gray-text truncate">{user.email}</p>
-                      </div>
-                      {(user.role === 'ADMIN' || user.role === 'SUPER_ADMIN') && (
-                        <Link
-                          href="/admin"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center gap-2 px-4 py-2.5 font-body text-sm text-purple font-semibold hover:bg-lavender transition-colors"
-                        >
-                          <Shield size={14} /> Admin Dashboard
-                        </Link>
-                      )}
-                      <Link
-                        href="/dashboard"
-                        onClick={() => setUserMenuOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2.5 font-body text-sm text-slate hover:bg-lavender transition-colors"
-                      >
-                        <LayoutDashboard size={14} /> My Dashboard
-                      </Link>
-                      <Link
-                        href="/dashboard/profile"
-                        onClick={() => setUserMenuOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2.5 font-body text-sm text-slate hover:bg-lavender transition-colors"
-                      >
-                        <Settings size={14} /> My Profile
-                      </Link>
-                      <button
-                        onClick={() => {
-                          logout();
-                          setUserMenuOpen(false);
-                          window.location.href = "/";
-                        }}
-                        className="flex w-full items-center gap-2 px-4 py-2.5 font-body text-sm text-error hover:bg-error/5 transition-colors border-t border-gray-border"
-                      >
-                        <LogOut size={14} /> Sign Out
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-            ) : (
+      {/* Utility top bar */}
+      <div className="relative z-[70] border-b border-white/10 bg-charcoal text-white">
+        <div className="mx-auto flex max-w-[1240px] flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:py-2.5">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-white/58">
+            <span>Sunday Worship 8:00 AM</span>
+            <span className="hidden text-white/16 lg:inline">|</span>
+            <span>Tuesday Prayer 5:30 PM</span>
+            <span className="hidden text-white/16 lg:inline">|</span>
+            <span>Friday Worship 5:30 PM</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {utilityLinks.map((link) => (
               <Link
-                href="/auth/login"
-                className="hidden sm:block font-heading text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white transition-colors"
+                key={link.href}
+                href={link.href}
+                onClick={closeMenus}
+                className={cn(
+                  "rounded-full border border-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/72",
+                  "hover:border-gold/50 hover:bg-white/5 hover:text-gold"
+                )}
               >
-                Sign In
+                {link.label}
               </Link>
-            )}
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Main sticky header */}
+      <header
+        className={cn(
+          "sticky top-0 z-[60] border-b border-white/8 bg-slate/92 backdrop-blur-xl transition-all duration-300",
+          scrolled && "shadow-[0_18px_40px_rgba(9,7,26,0.25)]"
+        )}
+      >
+        {/* Row 1: Logo + CTA + Mobile toggle */}
+        <div className="mx-auto max-w-[1240px] px-4 sm:px-6 md:px-8">
+          <div className="flex min-h-[72px] items-center justify-between gap-4 lg:min-h-[64px]">
+            <Link href="/" className="flex shrink-0 items-center" onClick={closeMenus}>
+              <Image
+                src="/Logo.png"
+                alt="The Ecclesia Embassy"
+                width={340}
+                height={96}
+                priority
+                className="h-[46px] w-auto object-contain md:h-[54px]"
+              />
+            </Link>
+
+            {/* Desktop: Sign In + Give/Sow */}
+            <div className="hidden items-center gap-3 lg:flex">
+              {!user ? (
+                <>
+                  <Link
+                    href="/auth/login"
+                    onClick={closeMenus}
+                    className="rounded-full px-3 py-2 text-sm font-medium text-white/70 hover:text-white"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/give"
+                    onClick={closeMenus}
+                    className={buttonClasses({ variant: "primary" })}
+                  >
+                    Give / Sow
+                  </Link>
+                </>
+              ) : (
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    onClick={() => setUserMenuOpen((open) => !open)}
+                    className="flex items-center gap-3 rounded-full border border-white/10 bg-white/6 px-3 py-2 text-white/86 hover:bg-white/10"
+                  >
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold text-slate">
+                      <User className="h-4 w-4" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-heading text-xs uppercase tracking-[0.18em] text-white/52">
+                        Account
+                      </p>
+                      <p className="font-body text-sm">
+                        {user.profile?.firstName || "Member"}
+                      </p>
+                    </div>
+                    <ChevronDown size={14} />
+                  </button>
+
+                  <AnimatePresence>
+                    {userMenuOpen ? (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.18 }}
+                        className="absolute right-0 top-full z-50 mt-3 w-60 overflow-hidden rounded-[26px] border border-slate/10 bg-white p-2 shadow-[0_28px_60px_rgba(14,11,30,0.16)]"
+                      >
+                        <div className="border-b border-slate/8 px-4 py-3">
+                          <p className="font-heading text-sm font-semibold text-slate">
+                            {user.profile?.firstName} {user.profile?.lastName}
+                          </p>
+                          <p className="font-body text-xs text-gray-text">{user.email}</p>
+                        </div>
+
+                        {(user.role === "ADMIN" || user.role === "SUPER_ADMIN") ? (
+                          <Link
+                            href="/admin"
+                            onClick={() => setUserMenuOpen(false)}
+                            className="mt-2 flex items-center gap-2 rounded-2xl px-4 py-3 font-body text-sm text-slate hover:bg-lavender"
+                          >
+                            <Shield size={14} /> Admin Dashboard
+                          </Link>
+                        ) : null}
+
+                        <Link
+                          href="/dashboard"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="mt-1 flex items-center gap-2 rounded-2xl px-4 py-3 font-body text-sm text-slate hover:bg-lavender"
+                        >
+                          <LayoutDashboard size={14} /> My Dashboard
+                        </Link>
+
+                        <button
+                          onClick={() => {
+                            logout();
+                            window.location.href = "/";
+                          }}
+                          className="mt-2 flex w-full items-center gap-2 rounded-2xl px-4 py-3 font-body text-sm text-error hover:bg-error/6"
+                        >
+                          <LogOut size={14} /> Sign Out
+                        </button>
+                      </motion.div>
+                    ) : null}
+                  </AnimatePresence>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile hamburger */}
             <button
-              aria-label="Search"
-              className="text-white/80 hover:text-white transition-colors"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/6 text-white lg:hidden"
             >
-              <Search size={22} />
+              <Menu size={20} />
             </button>
+          </div>
+        </div>
+
+        {/* Row 2: Nav links — desktop only */}
+        <div className="hidden border-t border-white/8 lg:block">
+          <div className="mx-auto max-w-[1240px] px-4 sm:px-6 md:px-8">
+            <nav className="flex items-center justify-center gap-0.5 py-1.5">
+              {navLinks.map((link) => {
+                const active =
+                  isActivePath(pathname, link.href) ||
+                  link.children?.some((child) => isActivePath(pathname, child.href));
+
+                return (
+                  <div
+                    key={link.label}
+                    className="relative"
+                    onMouseEnter={() => link.children && setOpenDropdown(link.label)}
+                    onMouseLeave={() => setOpenDropdown(null)}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpenDropdown(null)}
+                      className={cn(
+                        "flex items-center gap-1 rounded-full px-3 py-2 font-heading text-[11px] font-bold uppercase tracking-[0.08em]",
+                        active
+                          ? "bg-white/10 text-white"
+                          : "text-white/72 hover:bg-white/6 hover:text-white"
+                      )}
+                    >
+                      {link.label}
+                      {link.children ? (
+                        <motion.span
+                          animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
+                          transition={{ duration: 0.18 }}
+                        >
+                          <ChevronDown size={11} />
+                        </motion.span>
+                      ) : null}
+                    </Link>
+
+                    <AnimatePresence>
+                      {link.children && openDropdown === link.label ? (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 8 }}
+                          transition={{ duration: 0.16, ease: "easeOut" }}
+                          className="absolute left-1/2 top-full z-50 mt-2 w-[min(280px,90vw)] -translate-x-1/2 rounded-[26px] border border-white/10 bg-[#171126]/95 p-3 shadow-[0_30px_60px_rgba(9,7,26,0.34)] backdrop-blur-xl"
+                        >
+                          {link.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              onClick={() => setOpenDropdown(null)}
+                              className={cn(
+                                "block rounded-2xl px-4 py-3 font-body text-sm text-white/74",
+                                isActivePath(pathname, child.href)
+                                  ? "bg-white/10 text-white"
+                                  : "hover:bg-white/6 hover:text-white"
+                              )}
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </nav>
           </div>
         </div>
       </header>
 
-      {/* Navigation bar — sticky */}
-      <nav
-        className={cn(
-          "sticky top-0 z-50 bg-slate transition-shadow duration-300",
-          scrolled ? "shadow-lg" : "shadow-md"
-        )}
-      >
-        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8">
-          {/* Desktop nav */}
-          <div className="hidden lg:flex h-[50px] items-center gap-0">
-            {navLinks.map((link, i) => (
-              <div
-                key={link.label}
-                className="relative"
-                onMouseEnter={() => link.children && setOpenDropdown(link.label)}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <Link
-                  href={link.href}
-                  className={cn(
-                    "text-nav-link text-white px-3 py-4 flex items-center gap-1",
-                    "hover:text-lavender transition-colors duration-200",
-                    "border-b-2 border-transparent hover:border-purple-vivid"
-                  )}
-                >
-                  {link.label}
-                  {link.children && (
-                    <motion.span
-                      animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ChevronDown size={12} />
-                    </motion.span>
-                  )}
-                </Link>
-
-                {/* Separator */}
-                {i < navLinks.length - 1 && (
-                  <span className="absolute right-0 top-1/2 -translate-y-1/2 text-white/20 text-xs select-none">
-                    |
-                  </span>
-                )}
-
-                {/* Dropdown */}
-                <AnimatePresence>
-                  {link.children && openDropdown === link.label && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                      className="absolute left-0 top-full bg-white rounded-md shadow-lg py-2 min-w-[220px] z-50 border border-gray-border/50"
-                    >
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block px-4 py-2.5 font-body text-sm text-slate hover:bg-lavender hover:text-purple transition-colors"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile hamburger */}
-          <div className="flex lg:hidden h-[50px] items-center justify-end">
-            <button
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
-              className="text-white"
-            >
-              <Menu size={28} />
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile drawer */}
+      {/* Mobile slide-out menu */}
       <AnimatePresence>
-        {mobileOpen && (
-          <div className="fixed inset-0 z-[100] lg:hidden">
-            {/* Overlay */}
+        {mobileOpen ? (
+          <div className="fixed inset-0 z-[120] lg:hidden">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-[#09071A]/78 backdrop-blur-md"
               onClick={() => setMobileOpen(false)}
             />
 
-            {/* Drawer */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="absolute right-0 top-0 h-full w-[300px] bg-slate overflow-y-auto"
+              transition={{ type: "spring", stiffness: 280, damping: 30 }}
+              className="absolute right-0 top-0 flex h-full w-[min(360px,92vw)] flex-col overflow-y-auto bg-[linear-gradient(180deg,_#171126_0%,_#0E0B1E_100%)] p-6 text-white"
             >
-              <div className="flex items-center justify-between p-5 border-b border-white/10">
-                <span className="font-heading text-lg font-bold text-white">
-                  Menu
-                </span>
+              <div className="flex items-center justify-between border-b border-white/8 pb-5">
+                <Image
+                  src="/Logo.png"
+                  alt="The Ecclesia Embassy"
+                  width={180}
+                  height={52}
+                  className="h-[40px] w-auto object-contain"
+                />
                 <button
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close menu"
-                  className="text-white/70 hover:text-white transition-colors"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/6"
                 >
-                  <X size={24} />
+                  <X size={20} />
                 </button>
               </div>
 
-              {/* User section */}
-              {user ? (
-                <Link
-                  href="/dashboard"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-6 py-4 border-b border-white/10"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-vivid">
-                    <User className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-heading text-sm font-bold text-white">
-                      {user.profile?.firstName} {user.profile?.lastName}
-                    </p>
-                    <p className="font-body text-xs text-white/50">View Dashboard</p>
-                  </div>
-                </Link>
-              ) : (
-                <Link
-                  href="/auth/login"
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-6 py-4 border-b border-white/10 font-heading text-sm font-bold text-purple-vivid"
-                >
-                  Sign In / Register
-                </Link>
-              )}
+              <div className="mt-6 rounded-[28px] border border-white/10 bg-white/6 p-5">
+                <p className="font-heading text-xs uppercase tracking-[0.28em] text-gold">
+                  This Week
+                </p>
+                <div className="mt-3 space-y-2 font-body text-sm text-white/74">
+                  <p>Sunday Worship Service — 8:00 AM</p>
+                  <p>Tuesday Prayer Service — 5:30 PM</p>
+                  <p>Friday Worship Service — 5:30 PM</p>
+                </div>
+              </div>
 
-              <div className="flex flex-col py-2">
-                {navLinks.map((link) => (
-                  <div key={link.label}>
-                    <Link
-                      href={link.href}
-                      onClick={() => !link.children && setMobileOpen(false)}
-                      className="block px-6 py-3 text-nav-link text-white hover:text-lavender hover:bg-white/5 transition-colors"
+              <div className="mt-5 flex flex-col gap-3">
+                <Link
+                  href="/new-here"
+                  onClick={closeMenus}
+                  className={buttonClasses({ variant: "primary", className: "w-full" })}
+                >
+                  Plan Your Visit
+                </Link>
+                <Link
+                  href="/give"
+                  onClick={closeMenus}
+                  className={buttonClasses({
+                    variant: "secondary",
+                    onDark: true,
+                    className: "w-full",
+                  })}
+                >
+                  Give / Sow
+                </Link>
+              </div>
+
+              <div className="mt-8 space-y-2">
+                {navLinks.map((link) => {
+                  const active =
+                    isActivePath(pathname, link.href) ||
+                    link.children?.some((child) => isActivePath(pathname, child.href));
+
+                  return (
+                    <div
+                      key={link.label}
+                      className="rounded-[28px] border border-white/6 bg-white/4 px-4 py-4"
                     >
-                      {link.label}
+                      <Link
+                        href={link.href}
+                        onClick={!link.children ? closeMenus : undefined}
+                        className={cn(
+                          "flex items-center justify-between text-nav-link",
+                          active ? "text-gold" : "text-white"
+                        )}
+                      >
+                        <span>{link.label}</span>
+                        {link.children ? <ChevronDown size={14} className="text-white/50" /> : null}
+                      </Link>
+                      {link.children ? (
+                        <div className="mt-3 space-y-1 border-t border-white/8 pt-3">
+                          {link.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              onClick={closeMenus}
+                              className={cn(
+                                "block rounded-2xl px-3 py-2 font-body text-sm",
+                                isActivePath(pathname, child.href)
+                                  ? "bg-white/10 text-white"
+                                  : "text-white/68"
+                              )}
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-8 border-t border-white/10 pt-6">
+                {user ? (
+                  <div className="space-y-3">
+                    <p className="font-body text-sm text-white/70">
+                      Signed in as {user.profile?.firstName || "Member"}
+                    </p>
+                    <Link
+                      href="/dashboard"
+                      onClick={closeMenus}
+                      className="block rounded-2xl bg-white/6 px-4 py-3 font-body"
+                    >
+                      Open Dashboard
                     </Link>
-                    {link.children && (
-                      <div className="pl-10 pb-1">
-                        {link.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="block py-2 font-body text-sm text-white/60 hover:text-white transition-colors"
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
+                    <button
+                      onClick={() => {
+                        logout();
+                        window.location.href = "/";
+                      }}
+                      className="w-full rounded-2xl border border-white/10 px-4 py-3 text-left font-body text-white/72"
+                    >
+                      Sign Out
+                    </button>
                   </div>
-                ))}
+                ) : (
+                  <Link
+                    href="/auth/login"
+                    onClick={closeMenus}
+                    className="block rounded-2xl bg-white/6 px-4 py-3 font-body text-white"
+                  >
+                    Sign In
+                  </Link>
+                )}
               </div>
             </motion.div>
           </div>
-        )}
+        ) : null}
       </AnimatePresence>
     </>
   );

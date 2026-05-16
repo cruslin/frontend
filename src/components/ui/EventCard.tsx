@@ -41,7 +41,7 @@ export default function EventCard({
 
       {/* Content */}
       <div className="flex flex-col gap-1 min-w-0">
-        <h3 className="font-heading text-lg font-semibold text-slate truncate">
+        <h3 className="font-heading text-base sm:text-lg font-semibold text-slate truncate">
           {title}
         </h3>
         <p className="font-body text-sm text-gray-text line-clamp-2">

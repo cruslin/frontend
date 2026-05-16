@@ -4,19 +4,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import PageHero from "@/components/ui/PageHero";
 import SectionWrapper from "@/components/ui/SectionWrapper";
+import SectionHeading from "@/components/ui/SectionHeading";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { contact } from "@/lib/api";
 import { useToast } from "@/components/ui/Toast";
-import {
-  FadeIn,
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/ui/Motion";
+import { FadeIn } from "@/components/ui/Motion";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 
-// Form validation schema
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
@@ -25,6 +22,29 @@ const contactFormSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
+
+const contactDetails = [
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Sarki Tafida Street, Guzape Hills, Asokoro, Abuja",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+234 803 400 7867",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: "hello@theecclesia.org",
+  },
+  {
+    icon: Clock,
+    label: "Service Times",
+    value: "Sundays 8:00 AM · Tuesdays & Fridays 5:30 PM",
+  },
+];
 
 const ContactPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,234 +77,164 @@ const ContactPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-off-white">
-      {/* Hero Section */}
-      <section
-        className="relative h-96 bg-cover bg-center flex items-center justify-center"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&q=80')`,
-        }}
-      >
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/50" />
+    <main className="page-bands">
+      <PageHero
+        eyebrow="Contact Us"
+        title="We'd love to hear from you."
+        subtitle="Reach out and let us know how we can serve you."
+        description="Whether you have a question, need prayer, or simply want to connect — our team is here. Send us a message and we will get back to you shortly."
+        backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&q=80"
+        actions={[
+          { href: "/new-here", label: "Plan Your Visit", variant: "primary" },
+          { href: "/prayer", label: "Submit Prayer Request", variant: "secondary", onDark: true },
+        ]}
+        compact
+      />
 
-        {/* Hero content */}
-        <div className="relative z-10 text-center text-white">
-          <h1 className="font-heading text-5xl font-bold mb-4">Get in Touch</h1>
-          <p className="font-body text-lg text-off-white mb-6">
-            We'd love to hear from you
-          </p>
-          {/* Decorative line */}
-          <div className="w-16 h-1 bg-purple-vivid mx-auto" />
-        </div>
-      </section>
-
-      {/* Main Content Section */}
+      {/* Form + Info */}
       <SectionWrapper variant="white">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Form Column */}
-          <div className="lg:col-span-7">
-            <FadeIn>
-              <h2 className="font-heading text-3xl font-bold text-slate mb-2">
-                Send us a Message
-              </h2>
-              <p className="text-gray-text mb-8 font-body">
-                Fill out the form below and we'll get back to you as soon as
-                possible.
+        <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          {/* Form column */}
+          <FadeIn>
+            <SectionHeading
+              eyebrow="Send a Message"
+              title="Write to us directly."
+              description="Fill out the form below and we'll get back to you as soon as possible."
+              className="mb-10"
+            />
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div>
+                <label className="mb-2 block font-heading text-xs font-semibold uppercase tracking-[0.2em] text-slate">
+                  Your Name
+                </label>
+                <Input
+                  {...register("name")}
+                  placeholder="Full name"
+                  className={errors.name ? "border-error" : ""}
+                />
+                {errors.name && (
+                  <p className="mt-1.5 font-body text-sm text-error">{errors.name.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="mb-2 block font-heading text-xs font-semibold uppercase tracking-[0.2em] text-slate">
+                  Email Address
+                </label>
+                <Input
+                  {...register("email")}
+                  type="email"
+                  placeholder="your@email.com"
+                  className={errors.email ? "border-error" : ""}
+                />
+                {errors.email && (
+                  <p className="mt-1.5 font-body text-sm text-error">{errors.email.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="mb-2 block font-heading text-xs font-semibold uppercase tracking-[0.2em] text-slate">
+                  Subject
+                </label>
+                <Input
+                  {...register("subject")}
+                  placeholder="What is this about?"
+                  className={errors.subject ? "border-error" : ""}
+                />
+                {errors.subject && (
+                  <p className="mt-1.5 font-body text-sm text-error">{errors.subject.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="mb-2 block font-heading text-xs font-semibold uppercase tracking-[0.2em] text-slate">
+                  Message
+                </label>
+                <textarea
+                  {...register("message")}
+                  placeholder="Tell us more..."
+                  rows={7}
+                  className="w-full rounded-[14px] border border-[rgba(14,11,30,0.12)] bg-white px-4 py-3 font-body text-sm text-slate placeholder-gray-text transition-colors focus:border-gold/60 focus:outline-none focus:ring-2 focus:ring-gold/15 resize-none"
+                />
+                {errors.message && (
+                  <p className="mt-1.5 font-body text-sm text-error">{errors.message.message}</p>
+                )}
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="w-full"
+              >
+                {isLoading ? (
+                  "Sending..."
+                ) : (
+                  <>
+                    <Send size={16} />
+                    Send Message
+                  </>
+                )}
+              </Button>
+            </form>
+          </FadeIn>
+
+          {/* Info column */}
+          <FadeIn direction="left" delay={0.1}>
+            <div className="mesh-panel rounded-[32px] p-8 shadow-[0_30px_60px_rgba(14,11,30,0.08)]">
+              <p className="font-heading text-xs font-semibold uppercase tracking-[0.28em] text-purple-vivid">
+                Get in Touch
+              </p>
+              <h3 className="mt-4 font-heading text-2xl font-bold text-slate">
+                We are here for you.
+              </h3>
+              <p className="mt-3 font-body text-sm leading-7 text-gray-text">
+                Our team is available to answer your questions, receive prayer requests, or help you find your next step at the Embassy.
               </p>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Name Field */}
-                <div>
-                  <label className="block font-body text-sm font-medium text-slate mb-2">
-                    Name
-                  </label>
-                  <Input
-                    {...register("name")}
-                    placeholder="Your name"
-                    className={
-                      errors.name
-                        ? "border-red-500 focus:ring-red-500"
-                        : "border-lavender focus:ring-purple"
-                    }
-                  />
-                  {errors.name && (
-                    <p className="text-red-500 text-sm mt-1 font-body">
-                      {errors.name.message}
-                    </p>
-                  )}
-                </div>
+              <div className="mt-8 space-y-5">
+                {contactDetails.map((item) => {
+                  const Icon = item.icon;
 
-                {/* Email Field */}
-                <div>
-                  <label className="block font-body text-sm font-medium text-slate mb-2">
-                    Email
-                  </label>
-                  <Input
-                    {...register("email")}
-                    type="email"
-                    placeholder="your@email.com"
-                    className={
-                      errors.email
-                        ? "border-red-500 focus:ring-red-500"
-                        : "border-lavender focus:ring-purple"
-                    }
-                  />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1 font-body">
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Subject Field */}
-                <div>
-                  <label className="block font-body text-sm font-medium text-slate mb-2">
-                    Subject
-                  </label>
-                  <Input
-                    {...register("subject")}
-                    placeholder="What is this about?"
-                    className={
-                      errors.subject
-                        ? "border-red-500 focus:ring-red-500"
-                        : "border-lavender focus:ring-purple"
-                    }
-                  />
-                  {errors.subject && (
-                    <p className="text-red-500 text-sm mt-1 font-body">
-                      {errors.subject.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Message Field */}
-                <div>
-                  <label className="block font-body text-sm font-medium text-slate mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    {...register("message")}
-                    placeholder="Tell us more..."
-                    rows={8}
-                    className="w-full px-4 py-3 border-2 border-lavender rounded-lg font-body text-slate placeholder-gray-text focus:outline-none focus:border-purple focus:ring-2 focus:ring-purple/10 transition-colors resize-none"
-                  />
-                  {errors.message && (
-                    <p className="text-red-500 text-sm mt-1 font-body">
-                      {errors.message.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Submit Button */}
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-purple hover:bg-purple-vivid text-white font-body font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  {isLoading ? (
-                    <>Sending...</>
-                  ) : (
-                    <>
-                      <Send size={18} />
-                      Send Message
-                    </>
-                  )}
-                </Button>
-              </form>
-            </FadeIn>
-          </div>
-
-          {/* Contact Info Column */}
-          <div className="lg:col-span-5">
-            <FadeIn direction="left">
-              <div className="bg-purple-dark rounded-xl p-8 text-white space-y-6">
-                <h3 className="font-heading text-2xl font-bold">Contact Info</h3>
-
-                {/* Address */}
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <MapPin size={20} />
-                  </div>
-                  <div>
-                    <p className="font-body text-sm text-white/80 mb-1">
-                      Location
-                    </p>
-                    <p className="font-body font-medium">
-                      The Ecclesia Embassy, Abuja, Nigeria
-                    </p>
-                  </div>
-                </div>
-
-                {/* Phone */}
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <Phone size={20} />
-                  </div>
-                  <div>
-                    <p className="font-body text-sm text-white/80 mb-1">
-                      Phone
-                    </p>
-                    <p className="font-body font-medium">+234 XXX XXX XXXX</p>
-                  </div>
-                </div>
-
-                {/* Email */}
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <Mail size={20} />
-                  </div>
-                  <div>
-                    <p className="font-body text-sm text-white/80 mb-1">
-                      Email
-                    </p>
-                    <p className="font-body font-medium">
-                      hello@theecclesia.org
-                    </p>
-                  </div>
-                </div>
-
-                {/* Service Times */}
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <Clock size={20} />
-                  </div>
-                  <div>
-                    <p className="font-body text-sm text-white/80 mb-1">
-                      Service Times
-                    </p>
-                    <p className="font-body font-medium">
-                      Sunday 9AM, Tuesday 6PM, Friday 6PM
-                    </p>
-                  </div>
-                </div>
+                  return (
+                    <div key={item.label} className="flex gap-4">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-purple-light text-purple-vivid">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-text">
+                          {item.label}
+                        </p>
+                        <p className="mt-1 font-body text-sm text-slate">{item.value}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
         </div>
       </SectionWrapper>
 
-      {/* Map Section */}
-      <SectionWrapper variant="off-white">
-        <div className="mb-8">
-          <h2 className="font-heading text-3xl font-bold text-slate mb-2">
-            Find Us
-          </h2>
-          <p className="text-gray-text font-body">
-            Visit us at our location in Abuja
-          </p>
-        </div>
-
+      {/* Map */}
+      <SectionWrapper variant="lavender">
+        <SectionHeading
+          eyebrow="Find Us"
+          title="Come worship with us."
+          description="Sarki Tafida Street, Guzape Hills, Asokoro, Abuja, Nigeria"
+          className="mb-10"
+        />
         <FadeIn>
-          <div className="rounded-xl overflow-hidden shadow-lg h-[400px]">
+          <div className="overflow-hidden rounded-[28px] shadow-[0_20px_48px_rgba(14,11,30,0.10)] h-[220px] sm:h-[300px] md:h-[400px]">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.4774419256367!2d7.465400!3d9.076584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104b0e0000000001%3A0x1234567890abcdef!2sAbuja!5e0!3m2!1sen!2sng!4v1234567890"
+              src="https://maps.google.com/maps?q=Sarki+Tafida+Street+Guzape+Hills+Asokoro+Abuja+Nigeria&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              title="The Ecclesia Embassy location"
             />
           </div>
         </FadeIn>

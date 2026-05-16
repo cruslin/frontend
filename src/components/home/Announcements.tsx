@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { announcements as announcementsAPI } from "@/lib/api";
 import { SkeletonGroup } from "@/components/ui/Skeleton";
 import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/ui/Motion";
@@ -58,14 +59,12 @@ export default function Announcements() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <FadeIn>
-          <div className="mb-12">
-            <h2 className="font-heading text-4xl font-bold text-slate">
-              News & Announcements
-            </h2>
-            <p className="mt-2 text-lg text-gray-text">
-              Stay informed on what's happening
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Stay Current"
+            title="News, updates, and moments worth noting."
+            description="Catch the latest rhythm of the house, upcoming opportunities, and important community information in one place."
+            className="mb-12"
+          />
         </FadeIn>
 
         {/* Loading State */}
@@ -87,14 +86,14 @@ export default function Announcements() {
               {announcements.map((announcement) => (
                 <StaggerItem key={announcement.id}>
                   <HoverLift>
-                    <div className="flex h-full flex-col rounded-lg bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-md">
+                    <div className="flex h-full flex-col rounded-[28px] border border-slate/6 bg-white p-6 shadow-[0_20px_46px_rgba(14,11,30,0.08)] transition-shadow duration-200 hover:shadow-[0_24px_54px_rgba(14,11,30,0.12)]">
                       {/* Date */}
-                      <p className="font-semibold text-purple-vivid">
+                      <p className="font-heading text-xs font-semibold uppercase tracking-[0.2em] text-purple-vivid">
                         {formatDate(announcement)}
                       </p>
 
                       {/* Title */}
-                      <h3 className="mt-3 text-lg font-bold text-slate">
+                      <h3 className="mt-4 text-xl font-bold text-slate">
                         {announcement.title}
                       </h3>
 

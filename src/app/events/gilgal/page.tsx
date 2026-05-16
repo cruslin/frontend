@@ -29,14 +29,37 @@ export default function GilgalPage() {
       </section>
 
       <SectionWrapper variant="white">
-        <div className="mx-auto max-w-2xl text-center">
-          <Mountain className="mx-auto h-12 w-12 text-purple mb-4" />
-          <h2 className="font-heading text-[28px] font-bold text-slate">About Gilgal</h2>
-          <p className="mt-4 font-body text-base text-gray-text leading-relaxed">
-            Gilgal Camp Meetings are tri-annual retreats designed for deep spiritual
-            refreshing, encounter, and repositioning. Step away from the routine and
-            enter into an intensive time of Word, worship, prayer, and fellowship.
-          </p>
+        <div className="mx-auto max-w-3xl">
+          <div className="text-center mb-8">
+            <Mountain className="mx-auto h-12 w-12 text-purple mb-4" />
+            <h2 className="font-heading text-[28px] font-bold text-slate">About Gilgal</h2>
+          </div>
+          <div className="space-y-5 font-body text-base text-gray-text leading-relaxed">
+            <p>
+              Gilgal is a prophetic gathering convened by The Ecclesia Embassy, programmed by God to deliver
+              to every Partaker a deluge of eternal realities and benefits that can only be realized when we
+              are fully aware of the dividends of &lsquo;camping alone with God&rsquo;.
+            </p>
+            <p>
+              It is a sacred space for personal and corporate Spiritual Realignment, Renewal, and Refiring.
+              Drawing inspiration from the Biblical significance of Gilgal, it is a place where the reproach
+              of Egypt was rolled away (Joshua 5:9), this meeting emphasizes transition, consecration, and
+              the establishment of believers in their divine identity and God-given purpose.
+            </p>
+            <p>
+              At Gilgal, Partakers are led through intense sessions of worship, prayer, and the Word, with a
+              strong focus on breaking limitations, activating spiritual authority, and fostering kingdom
+              consciousness. The platform serves as a spiritual checkpoint where individuals are refined,
+              empowered, and commissioned for greater impacts in their personal lives, ministries, and
+              spheres of influence.
+            </p>
+            <p>
+              Gilgal will forever stand as a call to deeper intimacy with God and a life of intentional
+              kingdom representation. Something tangible, undeniable and drastic will happen to you in Gilgal
+              that will leave you with an indelible mark forever.
+            </p>
+            <p className="font-heading text-sm font-semibold text-slate text-right">— Victor Oluwadamilare</p>
+          </div>
         </div>
       </SectionWrapper>
 

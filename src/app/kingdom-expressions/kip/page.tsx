@@ -23,7 +23,7 @@ export default function KIPPage() {
     }
   }, [isAuthenticated, authLoading, router]);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
@@ -60,53 +60,77 @@ export default function KIPPage() {
       </section>
 
       <SectionWrapper variant="white">
-        <div className="mx-auto max-w-3xl space-y-6 mb-10">
-          <div className="text-center mb-8">
+        <div className="mx-auto max-w-3xl space-y-10">
+          <div className="text-center">
             <h2 className="font-heading text-[28px] font-bold text-slate">About KIP</h2>
+            <p className="mt-3 font-heading text-base font-semibold text-[#C9A84C] tracking-wide">
+              Raising Kingdom Voices. Shaping Systems. Advancing God&rsquo;s Agenda.
+            </p>
           </div>
+
           <div className="space-y-4 font-body text-base text-gray-text leading-relaxed">
             <p>
-              <span className="font-semibold text-slate">Kingdom Influence Platforms (KIP)</span> is an arm of The Ecclesia Embassy dedicated to
-              extending the influence of the Kingdom of God beyond the four walls of the
-              church and into the systems and spheres that shape civilization.
+              The <span className="font-semibold text-slate">Kingdom Influencing Platform (KIP)</span>, a tier of
+              the Ecclesia Embassy, is a movement committed to raising and equipping Kingdom ambassadors who carry
+              the culture of Heaven into every sphere of society.
             </p>
             <p>
-              We believe that the Church is not called to be confined to religious spaces
-              alone — we are called to disciple nations, reform systems, and bring Kingdom
-              culture into every area of human endeavour. KIP exists to raise, equip, and
-              position believers as agents of transformation in government, education,
-              business, media, health, technology, agriculture, and every critical sector of
-              society.
+              We exist to ensure that believers do not merely exist within the world&rsquo;s systems — but transform
+              them through Kingdom principles, divine wisdom, and unwavering devotion to God.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3 mt-8">
-            {[
-              { icon: Globe, title: "Courtesy Visits", desc: "Strategic visits to organizations, agencies, and institutions across Abuja to build bridges between the Church and key sectors of society." },
-              { icon: Target, title: "Research & Study", desc: "In-depth research into governance, economy, agriculture, health, education, and more — identifying where and how the Church can provide Kingdom solutions." },
-              { icon: BookOpen, title: "Kingdom Positioning", desc: "Training and equipping believers for strategic influence in their professional fields and vocational callings." },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.title} className="text-center">
-                  <Icon className="mx-auto h-8 w-8 text-purple mb-3" />
-                  <h3 className="font-heading text-base font-bold text-slate">{item.title}</h3>
-                  <p className="mt-2 font-body text-sm text-gray-text">{item.desc}</p>
-                </div>
-              );
-            })}
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="rounded-[8px] bg-off-white border border-gray-border p-6">
+              <h3 className="font-heading text-base font-bold text-slate mb-3">Our Vision</h3>
+              <p className="font-body text-sm text-gray-text leading-relaxed">
+                To seek God by raising and equipping Kingdom ambassadors who influence every sphere of society —
+                shining as lights in the world while upholding God&rsquo;s standards.
+              </p>
+            </div>
+            <div className="rounded-[8px] bg-off-white border border-gray-border p-6">
+              <h3 className="font-heading text-base font-bold text-slate mb-3">Our Philosophy</h3>
+              <p className="font-body text-sm text-gray-text leading-relaxed">
+                We are in this world — but we are not of it. We engage systems — business, governance, education,
+                media — not to blend in, but to shift culture. Our identity is anchored in the Kingdom of God.
+              </p>
+              <p className="mt-3 font-heading text-sm font-semibold text-slate">
+                We do not conform. We transform.
+              </p>
+            </div>
           </div>
 
-          <div className="mt-8 rounded-[8px] bg-off-white border border-gray-border p-6">
-            <p className="font-body text-base text-gray-text leading-relaxed">
-              Through KIP, we are not waiting for change — we are becoming the change.
-              We are raising a generation of Kingdom ambassadors who will sit at the tables
-              where decisions are made, bring godly wisdom into boardrooms, classrooms,
-              and courtrooms, and ultimately see the knowledge of the glory of the Lord
-              cover the earth as the waters cover the sea.
+          <div>
+            <h3 className="font-heading text-base font-bold text-slate mb-4">Our Mission</h3>
+            <p className="font-body text-sm text-gray-text mb-4 leading-relaxed">
+              We are intentional about raising believers who:
             </p>
-            <p className="mt-4 font-heading text-sm font-semibold text-purple">
-              Welcome to KIP — where influence meets purpose.
+            <ul className="space-y-3">
+              {[
+                "Engage the world's systems without losing their Kingdom identity",
+                "Are strategically positioned for societal transformation",
+                "Operate by divine wisdom, not worldly philosophy",
+                "Discern and overcome forces that oppose Kingdom influence",
+                "Function from a place of reverence for God and deep love for Him",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#C9A84C] shrink-0" />
+                  <span className="font-body text-sm text-gray-text leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-[8px] bg-slate p-6 text-center">
+            <p className="font-body text-base text-white/80 leading-relaxed mb-3">
+              We are not raising passive believers.
+            </p>
+            <p className="font-body text-base text-white/80 leading-relaxed">
+              We are raising <span className="font-semibold text-white">disciplined, discerning, and dangerous Kingdom operators</span> —
+              men and women who can step into systems and shift them, establish righteousness, and advance God&rsquo;s agenda on the earth.
+            </p>
+            <p className="mt-4 font-heading text-xs font-bold uppercase tracking-widest text-[#C9A84C]">
+              What We Are Building
             </p>
           </div>
         </div>

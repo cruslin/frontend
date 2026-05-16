@@ -84,7 +84,7 @@ export default function EventsPage() {
     <main>
       {/* Hero Section */}
       <section
-        className="relative h-96 flex items-center justify-center overflow-hidden"
+        className="relative min-h-[260px] sm:h-80 md:h-96 flex items-center justify-center overflow-hidden"
         style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1920&q=80)",
@@ -162,25 +162,25 @@ export default function EventsPage() {
         <StaggerContainer>
           {/* Month Picker */}
           <StaggerItem>
-            <div className="flex items-center justify-center gap-6 mb-12">
+            <div className="flex items-center justify-center gap-4 sm:gap-6 mb-12">
               <button
                 onClick={() =>
                   setCurrentMonth((m) => (m === 0 ? 11 : m - 1))
                 }
-                className="text-gray-text hover:text-purple transition-colors p-2"
+                className="text-gray-text hover:text-purple transition-colors p-3 rounded-full hover:bg-lavender"
               >
-                <ChevronLeft size={28} />
+                <ChevronLeft size={24} />
               </button>
-              <h2 className="font-heading text-2xl font-bold text-slate w-64 text-center">
+              <h2 className="font-heading text-xl sm:text-2xl font-bold text-slate w-44 sm:w-64 text-center" suppressHydrationWarning>
                 {months[currentMonth]} {currentYear}
               </h2>
               <button
                 onClick={() =>
                   setCurrentMonth((m) => (m === 11 ? 0 : m + 1))
                 }
-                className="text-gray-text hover:text-purple transition-colors p-2"
+                className="text-gray-text hover:text-purple transition-colors p-3 rounded-full hover:bg-lavender"
               >
-                <ChevronRight size={28} />
+                <ChevronRight size={24} />
               </button>
             </div>
           </StaggerItem>

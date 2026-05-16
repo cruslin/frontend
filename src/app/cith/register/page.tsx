@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
@@ -85,19 +85,19 @@ function RegisterHubContent() {
         <FadeIn>
           <div className="max-w-2xl mx-auto">
             {isSuccess ? (
-              <div className="bg-[#E4E0EF] border-2 border-[#27AE60] rounded-lg p-12 text-center">
+              <div className="bg-[#E8E6F0] border-2 border-[#27AE60] rounded-lg p-12 text-center">
                 <CheckCircle className="w-16 h-16 text-[#27AE60] mx-auto mb-4" />
-                <h2 className="text-3xl font-heading font-bold text-[#241A42] mb-2">
+                <h2 className="text-3xl font-heading font-bold text-[#0E0B1E] mb-2">
                   Application Submitted!
                 </h2>
-                <p className="text-[#8A8A8E] font-body">
+                <p className="text-[#8A8A90] font-body">
                   We've received your hub application. Our team will review it and reach out soon to discuss next steps.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <h2 className="text-3xl font-bold font-heading text-[#241A42] mb-8 text-center">
+                  <h2 className="text-3xl font-bold font-heading text-[#0E0B1E] mb-8 text-center">
                     Hub Application Form
                   </h2>
                 </div>
@@ -155,7 +155,7 @@ function RegisterHubContent() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-heading font-semibold text-[#241A42] mb-2">
+                    <label className="block text-sm font-heading font-semibold text-[#0E0B1E] mb-2">
                       Preferred Meeting Day <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -163,7 +163,7 @@ function RegisterHubContent() {
                       value={formData.preferredDay}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-[#E4E0EF] rounded-lg font-body text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors bg-white"
+                      className="w-full px-4 py-3 border-2 border-[#E8E6F0] rounded-lg font-body text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors bg-white"
                     >
                       <option value="">Select a day</option>
                       {days.map((d) => <option key={d} value={d}>{d}</option>)}
@@ -183,7 +183,7 @@ function RegisterHubContent() {
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-[#771996] hover:bg-[#4A1D6E] text-white font-heading font-semibold py-3 rounded-lg transition-colors disabled:opacity-50"
+                  className="w-full bg-[#C9A84C] hover:bg-[#0E0B1E] text-white font-heading font-semibold py-3 rounded-lg transition-colors disabled:opacity-50"
                 >
                   {isLoading ? 'Submitting...' : 'Submit Application'}
                 </Button>

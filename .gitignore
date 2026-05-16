@@ -29,9 +29,20 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+.next-dev.log
+.next-dev.err.log
+TODO.md
+
+# backend lives in its own repo (cruslin/backend) — never commit it here
+backend/
+
+# temp files
+.codex-temp/
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.local.example
+!backend/.env.example
 
 # vercel
 .vercel

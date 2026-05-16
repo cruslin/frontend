@@ -2,6 +2,7 @@
 
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import FeatureCard from '@/components/ui/FeatureCard';
+import SectionHeading from '@/components/ui/SectionHeading';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Motion';
 
 const quickLinks = [
@@ -38,7 +39,7 @@ const quickLinks = [
   {
     title: 'Join a Squad',
     subtitle: 'Kingdom Life Squads',
-    href: '/kingdom/squads',
+    href: '/kingdom-expressions/squads',
     imageUrl: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80',
   },
 ];
@@ -47,14 +48,13 @@ export default function QuickLinks() {
   return (
     <SectionWrapper variant="off-white" id="quick-links">
       <FadeIn>
-        <div className="text-center mb-10">
-          <h2 className="font-heading text-[28px] font-bold text-slate leading-9">
-            Explore
-          </h2>
-          <p className="mt-2 font-serif text-lg italic text-gray-text">
-            Quick access to everything you need
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="Explore the House"
+          title="Move through the life of the Embassy with clarity."
+          description="Whether you are visiting for the first time, catching up on a message, or looking for your next community step, these pages get you there quickly."
+          align="center"
+          className="mb-12"
+        />
       </FadeIn>
 
       <StaggerContainer>

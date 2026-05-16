@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import SectionWrapper from '@/components/ui/SectionWrapper'
 import Input from '@/components/ui/Input'
@@ -78,7 +78,7 @@ export default function TestimoniesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F5F5F5]">
+    <main className="min-h-screen bg-[#FAFAF8]">
       {/* Hero */}
       <section
         className="relative flex items-center justify-center py-24 md:py-32 bg-cover bg-center"
@@ -91,7 +91,7 @@ export default function TestimoniesPage() {
           <h1 className="font-heading text-4xl font-bold text-white md:text-[42px] md:leading-[48px]">
             Share Your Testimony
           </h1>
-          <p className="mt-3 font-serif text-lg font-light text-[#F5F5F5]">
+          <p className="mt-3 font-serif text-lg font-light text-[#FAFAF8]">
             Celebrate what God has done
           </p>
         </div>
@@ -104,15 +104,15 @@ export default function TestimoniesPage() {
             {submitted ? (
               <div className="text-center py-12">
                 <CheckCircle className="mx-auto h-16 w-16 text-[#27AE60] mb-6" />
-                <h3 className="font-heading text-2xl font-bold text-[#241A42] mb-2">
+                <h3 className="font-heading text-2xl font-bold text-[#0E0B1E] mb-2">
                   Your testimony has been received
                 </h3>
-                <p className="font-body text-[#8A8A8E] mb-8">
+                <p className="font-body text-[#8A8A90] mb-8">
                   Thank you for sharing. We will review and celebrate your story.
                 </p>
                 <Link
                   href="/"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-[#4A1D6E] text-white rounded-lg font-semibold hover:bg-[#771996] transition-colors"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-[#0E0B1E] text-white rounded-lg font-semibold hover:bg-[#C9A84C] transition-colors"
                 >
                   Back to Home
                 </Link>
@@ -120,7 +120,7 @@ export default function TestimoniesPage() {
             ) : (
               <>
                 <div className="text-center mb-8">
-                  <h2 className="font-heading text-3xl font-bold text-[#241A42]">
+                  <h2 className="font-heading text-3xl font-bold text-[#0E0B1E]">
                     Share Your Testimony
                   </h2>
                 </div>
@@ -165,14 +165,14 @@ export default function TestimoniesPage() {
                   <div className="flex flex-col gap-1.5">
                     <label
                       htmlFor="testimony"
-                      className="font-body text-sm font-medium text-[#31333B]"
+                      className="font-body text-sm font-medium text-[#0E0B1E]"
                     >
                       Your Testimony
                     </label>
                     <textarea
                       id="testimony"
                       name="testimony"
-                      className="h-48 w-full rounded-lg border border-[#31333B] bg-white px-4 py-3 font-body text-base text-[#31333B] placeholder:text-[#8A8A8E] transition-colors duration-150 focus:border-[#771996] focus:ring-3 focus:ring-[#771996]/15 focus:outline-none resize-none"
+                      className="h-48 w-full rounded-lg border border-[#0E0B1E] bg-white px-4 py-3 font-body text-base text-[#0E0B1E] placeholder:text-[#8A8A90] transition-colors duration-150 focus:border-[#C9A84C] focus:ring-3 focus:ring-[#C9A84C]/15 focus:outline-none resize-none"
                       placeholder="Share what God has done in your life..."
                       required
                     />
@@ -193,9 +193,9 @@ export default function TestimoniesPage() {
                   </Button>
 
                   {!isAuthenticated && (
-                    <p className="text-center font-body text-sm text-[#8A8A8E] mt-4">
+                    <p className="text-center font-body text-sm text-[#8A8A90] mt-4">
                       Please{' '}
-                      <Link href="/auth/login" className="text-[#771996] hover:underline font-semibold">
+                      <Link href="/auth/login" className="text-[#C9A84C] hover:underline font-semibold">
                         sign in
                       </Link>{' '}
                       to submit your testimony.
@@ -213,11 +213,11 @@ export default function TestimoniesPage() {
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <div className="text-center mb-12">
-              <Sparkles className="mx-auto h-8 w-8 text-[#D4A843] mb-3" />
-              <h2 className="font-heading text-3xl font-bold text-[#241A42] mb-2">
+              <Sparkles className="mx-auto h-8 w-8 text-[#C9A84C] mb-3" />
+              <h2 className="font-heading text-3xl font-bold text-[#0E0B1E] mb-2">
                 Testimonies of God&apos;s Faithfulness
               </h2>
-              <p className="font-body text-[#8A8A8E] max-w-xl mx-auto">
+              <p className="font-body text-[#8A8A90] max-w-xl mx-auto">
                 Read how God is moving in the lives of our members
               </p>
             </div>
@@ -229,17 +229,17 @@ export default function TestimoniesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {approvedTestimonies.map((t) => (
                 <FadeIn key={t.id}>
-                  <div className="bg-white rounded-lg border border-[#E4E0EF] shadow-sm p-6 h-full flex flex-col">
-                    <Quote className="h-6 w-6 text-[#D4A843] mb-3 flex-shrink-0" />
-                    <h3 className="font-heading text-lg font-bold text-[#241A42] mb-2">
+                  <div className="bg-white rounded-lg border border-[#E8E6F0] shadow-sm p-6 h-full flex flex-col">
+                    <Quote className="h-6 w-6 text-[#C9A84C] mb-3 flex-shrink-0" />
+                    <h3 className="font-heading text-lg font-bold text-[#0E0B1E] mb-2">
                       {t.title}
                     </h3>
-                    <p className="font-body text-[#31333B] text-sm leading-relaxed mb-4 flex-grow">
+                    <p className="font-body text-[#0E0B1E] text-sm leading-relaxed mb-4 flex-grow">
                       {t.content.length > 200
                         ? `${t.content.slice(0, 200)}...`
                         : t.content}
                     </p>
-                    <p className="font-body text-xs text-[#8A8A8E] mt-auto pt-3 border-t border-[#E4E0EF]">
+                    <p className="font-body text-xs text-[#8A8A90] mt-auto pt-3 border-t border-[#E8E6F0]">
                       {new Date(t.createdAt).toLocaleDateString('en-NG', {
                         year: 'numeric',
                         month: 'long',
@@ -252,8 +252,8 @@ export default function TestimoniesPage() {
             </div>
           ) : (
             <div className="text-center py-12">
-              <Quote className="w-12 h-12 text-[#E4E0EF] mx-auto mb-4" />
-              <p className="text-[#8A8A8E] font-body">
+              <Quote className="w-12 h-12 text-[#E8E6F0] mx-auto mb-4" />
+              <p className="text-[#8A8A90] font-body">
                 No testimonies shared yet. Be the first to share what God has done!
               </p>
             </div>

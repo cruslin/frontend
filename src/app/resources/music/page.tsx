@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
@@ -49,10 +49,10 @@ export default function EcclesiaMusicPage() {
         <div className="absolute inset-0 bg-black/50" aria-hidden="true" />
         <div className="relative z-10 text-center px-4">
           <div className="flex justify-center mb-4">
-            <Music className="w-16 h-16 text-[#E4E0EF]" />
+            <Music className="w-16 h-16 text-[#E8E6F0]" />
           </div>
           <h1 className="text-5xl font-bold font-heading text-white mb-4">Ecclesia Music</h1>
-          <p className="text-xl text-[#E4E0EF]">Worship in spirit and truth</p>
+          <p className="text-xl text-[#E8E6F0]">Worship in spirit and truth</p>
         </div>
       </section>
 
@@ -67,19 +67,19 @@ export default function EcclesiaMusicPage() {
               />
             ) : tracks.length === 0 ? (
               <div className="text-center py-16">
-                <Music className="w-12 h-12 text-[#E4E0EF] mx-auto mb-4" />
-                <p className="text-lg text-[#8A8A8E] font-body">No music tracks available yet.</p>
+                <Music className="w-12 h-12 text-[#E8E6F0] mx-auto mb-4" />
+                <p className="text-lg text-[#8A8A90] font-body">No music tracks available yet.</p>
               </div>
             ) : (
               <div>
-                <h2 className="text-3xl font-bold font-heading text-[#241A42] mb-8 text-center">
+                <h2 className="text-3xl font-bold font-heading text-[#0E0B1E] mb-8 text-center">
                   Worship Tracks
                 </h2>
                 <StaggerContainer>
                   <div className="space-y-4">
                     {tracks.map((track) => (
                       <StaggerItem key={track.id}>
-                        <div className="bg-[#F5F5F5] rounded-lg p-6 hover:shadow-lg transition-shadow group flex items-center gap-6">
+                        <div className="bg-[#FAFAF8] rounded-lg p-6 hover:shadow-lg transition-shadow group flex items-center gap-6">
                           {/* Album Art */}
                           <div className="flex-shrink-0">
                             {track.albumArt ? (
@@ -89,21 +89,21 @@ export default function EcclesiaMusicPage() {
                                 className="w-24 h-24 rounded-lg object-cover"
                               />
                             ) : (
-                              <div className="w-24 h-24 bg-gradient-to-br from-[#E4E0EF] to-[#lavender] rounded-lg flex items-center justify-center">
-                                <Music className="w-10 h-10 text-[#771996]" />
+                              <div className="w-24 h-24 bg-gradient-to-br from-[#E8E6F0] to-[#lavender] rounded-lg flex items-center justify-center">
+                                <Music className="w-10 h-10 text-[#C9A84C]" />
                               </div>
                             )}
                           </div>
 
                           {/* Track Info */}
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-lg font-heading font-bold text-[#241A42] truncate">
+                            <h3 className="text-lg font-heading font-bold text-[#0E0B1E] truncate">
                               {track.title}
                             </h3>
-                            <p className="text-[#8A8A8E] font-body text-sm mb-2">
+                            <p className="text-[#8A8A90] font-body text-sm mb-2">
                               {track.artist}
                             </p>
-                            <div className="flex items-center gap-1 text-[#8A8A8E] font-body text-sm">
+                            <div className="flex items-center gap-1 text-[#8A8A90] font-body text-sm">
                               <Clock className="w-4 h-4" />
                               {track.duration}
                             </div>
@@ -114,7 +114,7 @@ export default function EcclesiaMusicPage() {
                             href={track.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 bg-[#771996] hover:bg-[#4A1D6E] text-white rounded-full transition-colors group-hover:scale-110 transform"
+                            className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 bg-[#C9A84C] hover:bg-[#0E0B1E] text-white rounded-full transition-colors group-hover:scale-110 transform"
                           >
                             <Play className="w-5 h-5 ml-0.5" />
                           </a>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
@@ -148,19 +148,19 @@ export default function AudioArchivePage() {
           <SkeletonGroup count={5} variant="table-row" />
         ) : error ? (
           <div className="py-12 text-center">
-            <p className="font-body text-base" style={{ color: '#8A8A8E' }}>
+            <p className="font-body text-base" style={{ color: '#8A8A90' }}>
               {error}
             </p>
           </div>
         ) : filtered.length === 0 ? (
           <div className="py-12 text-center">
-            <p className="font-body text-base" style={{ color: '#8A8A8E' }}>
+            <p className="font-body text-base" style={{ color: '#8A8A90' }}>
               No audio messages found matching your search.
             </p>
           </div>
         ) : (
           <StaggerContainer className="space-y-4">
-            <p className="text-sm font-body mb-6" style={{ color: '#8A8A8E' }}>
+            <p className="text-sm font-body mb-6" style={{ color: '#8A8A90' }}>
               {filtered.length} message{filtered.length !== 1 ? 's' : ''} found
             </p>
             {filtered.map((audio) => (
@@ -168,8 +168,8 @@ export default function AudioArchivePage() {
                 <div
                   className="p-6 rounded-lg border transition-all duration-300 hover:shadow-md"
                   style={{
-                    backgroundColor: '#F5F5F5',
-                    borderColor: '#E4E0EF',
+                    backgroundColor: '#FAFAF8',
+                    borderColor: '#E8E6F0',
                   }}
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -180,33 +180,33 @@ export default function AudioArchivePage() {
                             setActiveAudio(activeAudio === audio.id ? null : audio.id)
                           }
                           className="flex-shrink-0 p-3 rounded-full transition-colors"
-                          style={{ backgroundColor: '#E4E0EF' }}
+                          style={{ backgroundColor: '#E8E6F0' }}
                         >
                           <Play
                             size={20}
-                            style={{ color: '#771996' }}
+                            style={{ color: '#C9A84C' }}
                             className="ml-0.5"
                           />
                         </button>
                         <div className="min-w-0 flex-1">
                           <h3
                             className="font-heading text-lg font-semibold mb-2 truncate"
-                            style={{ color: '#31333B' }}
+                            style={{ color: '#0E0B1E' }}
                           >
                             {audio.title}
                           </h3>
                           <div className="flex flex-wrap gap-3 items-center text-sm">
-                            <span style={{ color: '#8A8A8E' }}>
+                            <span style={{ color: '#8A8A90' }}>
                               {audio.speaker}
                             </span>
-                            <div className="flex items-center gap-1" style={{ color: '#8A8A8E' }}>
+                            <div className="flex items-center gap-1" style={{ color: '#8A8A90' }}>
                               <Calendar size={14} />
                               {new Date(
                                 audio.createdAt || audio.date || 0
                               ).toLocaleDateString()}
                             </div>
                             {audio.duration && (
-                              <div className="flex items-center gap-1" style={{ color: '#8A8A8E' }}>
+                              <div className="flex items-center gap-1" style={{ color: '#8A8A90' }}>
                                 <Clock size={14} />
                                 {audio.duration}
                               </div>
@@ -219,12 +219,12 @@ export default function AudioArchivePage() {
 
                   {/* Inline Audio Player */}
                   {activeAudio === audio.id && audio.audioUrl && (
-                    <div className="mt-4 pt-4 border-t" style={{ borderColor: '#E4E0EF' }}>
+                    <div className="mt-4 pt-4 border-t" style={{ borderColor: '#E8E6F0' }}>
                       <audio
                         controls
                         src={audio.audioUrl}
                         className="w-full"
-                        style={{ backgroundColor: '#F5F5F5' }}
+                        style={{ backgroundColor: '#FAFAF8' }}
                       />
                     </div>
                   )}

@@ -1,3 +1,25 @@
+import {
+  cloneFallback,
+  DEFAULT_ANNOUNCEMENTS,
+  DEFAULT_AUDIO_SERMONS,
+  DEFAULT_BLOG_POSTS,
+  DEFAULT_CITH_HUBS,
+  DEFAULT_EVENTS,
+  DEFAULT_INTENTIONALITY_COURSES,
+  DEFAULT_LATEST_MESSAGE,
+  DEFAULT_LIBRARY_RESOURCES,
+  DEFAULT_LIVESTREAM_CONFIG,
+  DEFAULT_MUSIC_TRACKS,
+  DEFAULT_SERVICE_SCHEDULE,
+  DEFAULT_SQUADS,
+  DEFAULT_TESTIMONIES,
+  DEFAULT_VIDEO_MESSAGES,
+  getDefaultBlogPost,
+  getDefaultCithHub,
+  getDefaultEvent,
+  getDefaultSquad,
+} from "@/lib/public-fallbacks";
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
 // Token management
@@ -65,6 +87,26 @@ export const fetchAPI = async <T>(
     return JSON.parse(text) as T;
   } catch {
     return null as T;
+  }
+};
+
+const isEmptyFallbackCandidate = (value: unknown) =>
+  value == null || (Array.isArray(value) && value.length === 0);
+
+const resolveFallback = <T>(fallback: T | (() => T)): T =>
+  typeof fallback === "function"
+    ? (fallback as () => T)()
+    : cloneFallback(fallback);
+
+const fetchWithFallback = async <T>(
+  request: () => Promise<T>,
+  fallback: T | (() => T)
+): Promise<T> => {
+  try {
+    const data = await request();
+    return isEmptyFallbackCandidate(data) ? resolveFallback(fallback) : data;
+  } catch {
+    return resolveFallback(fallback);
   }
 };
 
@@ -141,6 +183,14 @@ export interface Testimony {
   status: "pending" | "approved" | "rejected";
   createdAt: string;
   updatedAt: string;
+}
+
+export interface PublicTestimony {
+  id: string;
+  title: string;
+  content: string;
+  photoUrl?: string;
+  createdAt: string;
 }
 
 export interface Event {
@@ -345,7 +395,10 @@ export const firstTimer = {
 // SERVICE SCHEDULE ENDPOINTS
 export const serviceSchedule = {
   getPublic: () =>
-    fetchAPI<any[]>("/service-schedule", { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any[]>("/service-schedule", { noAuth: true }),
+      DEFAULT_SERVICE_SCHEDULE
+    ),
 
   adminGetAll: () =>
     fetchAPI<any[]>("/service-schedule/admin"),
@@ -426,7 +479,11 @@ export const testimonies = {
       body: JSON.stringify(data),
     }),
 
-  getTestimonies: () => fetchAPI<Testimony[]>("/testimonies", { noAuth: true }),
+  getTestimonies: () =>
+    fetchWithFallback(
+      () => fetchAPI<PublicTestimony[]>("/testimonies", { noAuth: true }),
+      DEFAULT_TESTIMONIES
+    ),
 
   getPendingTestimonies: () =>
     fetchAPI<Testimony[]>("/testimonies/admin/pending"),
@@ -493,9 +550,17 @@ export const giving = {
 
 // CITH (CHURCH IN THE HOUSE) ENDPOINTS
 export const cith = {
-  getHubs: () => fetchAPI<any[]>("/cith/hubs", { noAuth: true }),
+  getHubs: () =>
+    fetchWithFallback(
+      () => fetchAPI<any[]>("/cith/hubs", { noAuth: true }),
+      DEFAULT_CITH_HUBS
+    ),
 
-  getHub: (id: string) => fetchAPI<any>(`/cith/hubs/${id}`, { noAuth: true }),
+  getHub: (id: string) =>
+    fetchWithFallback(
+      () => fetchAPI<any>(`/cith/hubs/${id}`, { noAuth: true }),
+      () => getDefaultCithHub(id)
+    ),
 
   joinHub: (id: string) =>
     fetchAPI<{ success: boolean }>(`/cith/hubs/${id}/join`, {
@@ -664,7 +729,10 @@ export const nation = {
 // INTENTIONALITY CLASS ENDPOINTS
 export const intentionalityClass = {
   getAvailableCourses: () =>
-    fetchAPI<any[]>("/class/courses", { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any[]>("/class/courses", { noAuth: true }),
+      DEFAULT_INTENTIONALITY_COURSES
+    ),
 
   enroll: (courseId: string) =>
     fetchAPI<{ success: boolean }>(`/class/enroll/${courseId}`, {
@@ -754,10 +822,16 @@ export const intentionalityClass = {
 // BLOG ENDPOINTS
 export const blog = {
   getPosts: (limit = 10, offset = 0) =>
-    fetchAPI<any[]>(`/blog?limit=${limit}&offset=${offset}`, { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any[]>(`/blog?limit=${limit}&offset=${offset}`, { noAuth: true }),
+      () => cloneFallback(DEFAULT_BLOG_POSTS.slice(offset, offset + limit))
+    ),
 
   getPost: (slug: string) =>
-    fetchAPI<any>(`/blog/${slug}`, { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any>(`/blog/${slug}`, { noAuth: true }),
+      () => getDefaultBlogPost(slug)
+    ),
 
   createBlogPost: (data: {
     title: string;
@@ -784,20 +858,44 @@ export const blog = {
 // MEDIA ENDPOINTS
 export const media = {
   getAudioSermons: (search?: string, topic?: string, series?: string) =>
-    fetchAPI<any[]>(`/sermons/audio?${new URLSearchParams({
-      ...(search ? { search } : {}),
-      ...(topic ? { topic } : {}),
-      ...(series ? { series } : {}),
-    }).toString()}`, { noAuth: true }),
+    fetchWithFallback(
+      () =>
+        fetchAPI<any[]>(`/sermons/audio?${new URLSearchParams({
+          ...(search ? { search } : {}),
+          ...(topic ? { topic } : {}),
+          ...(series ? { series } : {}),
+        }).toString()}`, { noAuth: true }),
+      () =>
+        cloneFallback(
+          DEFAULT_AUDIO_SERMONS.filter((sermon) => {
+            const matchesSearch =
+              !search ||
+              sermon.title.toLowerCase().includes(search.toLowerCase()) ||
+              sermon.speaker.toLowerCase().includes(search.toLowerCase());
+            const matchesTopic = !topic || sermon.topic === topic;
+            const matchesSeries = !series || sermon.series === series;
+            return matchesSearch && matchesTopic && matchesSeries;
+          })
+        )
+    ),
 
   getLatestSermon: () =>
-    fetchAPI<any>("/sermons/audio/latest", { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any>("/sermons/audio/latest", { noAuth: true }),
+      DEFAULT_LATEST_MESSAGE
+    ),
 
   downloadSermon: (id: string) =>
     fetchAPI<{ downloadUrl: string }>(`/sermons/audio/${id}/download`, { noAuth: true }),
 
   getVideoMessages: (series?: string) =>
-    fetchAPI<any[]>(`/sermons/video${series ? `?series=${series}` : ""}`, { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any[]>(`/sermons/video${series ? `?series=${series}` : ""}`, { noAuth: true }),
+      () =>
+        cloneFallback(
+          DEFAULT_VIDEO_MESSAGES.filter((video) => !series || video.series === series)
+        )
+    ),
 
   createAudioSermon: (data: {
     title: string;
@@ -834,7 +932,10 @@ export const media = {
     }),
 
   getLibrary: () =>
-    fetchAPI<any[]>("/library", { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any[]>("/library", { noAuth: true }),
+      DEFAULT_LIBRARY_RESOURCES
+    ),
 
   createLibraryResource: (data: {
     title: string;
@@ -859,7 +960,10 @@ export const media = {
     fetchAPI<{ downloadUrl: string }>(`/library/${id}/download`, { noAuth: true }),
 
   getMusic: () =>
-    fetchAPI<any[]>("/music", { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any[]>("/music", { noAuth: true }),
+      DEFAULT_MUSIC_TRACKS
+    ),
 
   createMusic: (data: {
     title: string;
@@ -902,10 +1006,16 @@ export const media = {
 // EVENTS ENDPOINTS
 export const events = {
   getEvents: (limit = 20, offset = 0) =>
-    fetchAPI<Event[]>(`/events?limit=${limit}&offset=${offset}`, { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<Event[]>(`/events?limit=${limit}&offset=${offset}`, { noAuth: true }),
+      () => cloneFallback(DEFAULT_EVENTS.slice(offset, offset + limit))
+    ),
 
   getEvent: (id: string) =>
-    fetchAPI<Event>(`/events/${id}`, { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<Event>(`/events/${id}`, { noAuth: true }),
+      () => getDefaultEvent(id)
+    ),
 
   registerForEvent: (id: string, data: { name: string; email: string; phone?: string }) =>
     fetchAPI<{ success: boolean }>(`/events/${id}/register`, {
@@ -937,10 +1047,16 @@ export const events = {
 // SQUADS ENDPOINTS
 export const squads = {
   getSquads: () =>
-    fetchAPI<any[]>("/squads"),
+    fetchWithFallback(
+      () => fetchAPI<any[]>("/squads"),
+      DEFAULT_SQUADS
+    ),
 
   getSquad: (id: string) =>
-    fetchAPI<any>(`/squads/${id}`),
+    fetchWithFallback(
+      () => fetchAPI<any>(`/squads/${id}`),
+      () => getDefaultSquad(id)
+    ),
 
   joinSquad: (id: string) =>
     fetchAPI<{ success: boolean }>(`/squads/${id}/join`, {
@@ -981,7 +1097,10 @@ export const squads = {
 // ANNOUNCEMENTS ENDPOINTS
 export const announcements = {
   getAnnouncements: () =>
-    fetchAPI<any[]>("/announcements"),
+    fetchWithFallback(
+      () => fetchAPI<any[]>("/announcements"),
+      DEFAULT_ANNOUNCEMENTS
+    ),
 
   getAll: () =>
     fetchAPI<any[]>("/announcements/admin/all"),
@@ -1007,7 +1126,10 @@ export const announcements = {
 // LIVESTREAM ENDPOINTS
 export const livestream = {
   getConfig: () =>
-    fetchAPI<any>("/livestream/config", { noAuth: true }),
+    fetchWithFallback(
+      () => fetchAPI<any>("/livestream/config", { noAuth: true }),
+      DEFAULT_LIVESTREAM_CONFIG
+    ),
 
   updateLivestream: (data: {
     isLive: boolean;

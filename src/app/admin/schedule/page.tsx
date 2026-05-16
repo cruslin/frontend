@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { serviceSchedule } from "@/lib/api";
@@ -289,7 +289,7 @@ export default function AdminSchedulePage() {
                       setForm({ ...form, day: e.target.value })
                     }
                     placeholder="e.g. Sunday, Tuesday"
-                    className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                    className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                   />
                 </div>
                 <div>
@@ -303,7 +303,7 @@ export default function AdminSchedulePage() {
                       setForm({ ...form, dayLabel: e.target.value })
                     }
                     placeholder="e.g. of every month"
-                    className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                    className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                   />
                 </div>
               </div>
@@ -320,7 +320,7 @@ export default function AdminSchedulePage() {
                       setForm({ ...form, name: e.target.value })
                     }
                     placeholder="e.g. Word & Life Service"
-                    className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                    className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                   />
                 </div>
                 <div>
@@ -334,7 +334,7 @@ export default function AdminSchedulePage() {
                       setForm({ ...form, time: e.target.value })
                     }
                     placeholder="e.g. 8:00 AM"
-                    className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                    className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                   />
                 </div>
               </div>
@@ -350,7 +350,7 @@ export default function AdminSchedulePage() {
                   }
                   placeholder="Brief description of this service..."
                   rows={2}
-                  className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors resize-none"
+                  className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors resize-none"
                 />
               </div>
 
@@ -366,7 +366,7 @@ export default function AdminSchedulePage() {
                       setForm({ ...form, order: parseInt(e.target.value) || 0 })
                     }
                     min={0}
-                    className="w-full rounded-[8px] border-2 border-[#E4E0EF] bg-white px-4 py-2.5 font-body text-sm text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                    className="w-full rounded-[8px] border-2 border-[#E8E6F0] bg-white px-4 py-2.5 font-body text-sm text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                   />
                 </div>
                 <div className="flex items-end pb-2">

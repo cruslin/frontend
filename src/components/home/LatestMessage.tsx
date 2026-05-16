@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Play } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
+import SectionHeading from "@/components/ui/SectionHeading";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import { media } from "@/lib/api";
@@ -62,14 +63,12 @@ export default function LatestMessage() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <FadeIn>
-          <div className="mb-12">
-            <h2 className="font-heading text-4xl font-bold text-slate">
-              Latest Message
-            </h2>
-            <p className="mt-2 text-lg text-gray-text">
-              Watch the most recent teaching
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Fresh Teaching"
+            title="Catch the latest message from the house."
+            description="Revisit the most recent sermon, share it with someone else, or continue into the full archive when you are ready to go deeper."
+            className="mb-12"
+          />
         </FadeIn>
 
         {/* Video Container */}
@@ -88,7 +87,7 @@ export default function LatestMessage() {
             </div>
           ) : youtubeVideoId ? (
             <ScaleIn>
-              <div className="overflow-hidden rounded-xl shadow-lg">
+              <div className="overflow-hidden rounded-[32px] border border-slate/6 shadow-[0_26px_58px_rgba(14,11,30,0.12)]">
                 <div className="relative aspect-video w-full bg-slate">
                   <iframe
                     src={`https://www.youtube.com/embed/${youtubeVideoId}`}

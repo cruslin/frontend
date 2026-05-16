@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/lib/auth-context";
 import { ToastProvider } from "@/components/ui/Toast";
+import { MotionProvider } from "@/components/ui/MotionProvider";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -29,9 +30,9 @@ const crimsonText = Crimson_Text({
 });
 
 export const metadata: Metadata = {
-  title: "The Ecclesia Embassy — Welcome Home",
+  title: "The Ecclesia Embassy | Welcome Home",
   description:
-    "The Ecclesia Embassy is an apostolic and prophetic ministry based in Abuja, Nigeria. Word, Kingdom and Worship.",
+    "The Ecclesia Embassy is an apostolic and prophetic ministry in Abuja, Nigeria, raising Word-cultured ambassadors through worship, teaching, prayer, and community.",
   keywords: [
     "The Ecclesia Embassy",
     "church",
@@ -55,9 +56,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <AuthProvider>
           <ToastProvider>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            <MotionProvider>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </MotionProvider>
           </ToastProvider>
         </AuthProvider>
       </body>

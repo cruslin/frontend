@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -65,8 +65,9 @@ export default function SignupPage() {
       });
 
       setIsSuccess(true);
-    } catch (error: any) {
-      const errorMsg = error?.message || 'An error occurred. Please try again.';
+    } catch (error: unknown) {
+      const errorMsg =
+        error instanceof Error ? error.message : 'An error occurred. Please try again.';
       if (errorMsg.includes('409') || errorMsg.includes('already exists')) {
         setErrorMessage('An account with this email already exists');
       } else {
@@ -84,7 +85,7 @@ export default function SignupPage() {
         <div
           className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-8 relative overflow-hidden"
           style={{
-            background: `linear-gradient(135deg, #241A42 0%, #4A1D6E 50%, #771996 100%)`,
+            background: `linear-gradient(135deg, #0E0B1E 0%, #0E0B1E 50%, #C9A84C 100%)`,
           }}
         >
           <div
@@ -148,7 +149,7 @@ export default function SignupPage() {
       <div
         className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-8 relative overflow-hidden"
         style={{
-          background: `linear-gradient(135deg, #241A42 0%, #4A1D6E 50%, #771996 100%)`,
+          background: `linear-gradient(135deg, #0E0B1E 0%, #0E0B1E 50%, #C9A84C 100%)`,
         }}
       >
         <div
@@ -221,7 +222,7 @@ export default function SignupPage() {
           <FadeIn delay={0.2}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               {/* First Name & Last Name Row */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-body font-medium text-slate mb-2">
                     First Name

@@ -1,142 +1,128 @@
 import Link from "next/link";
-import { Heart, BookOpen, Sparkles, Crown } from "lucide-react";
-import Button from "@/components/ui/Button";
+import { BookOpen, Crown, Heart, Sparkles } from "lucide-react";
+import PageHero from "@/components/ui/PageHero";
 import SectionWrapper from "@/components/ui/SectionWrapper";
+import SectionHeading from "@/components/ui/SectionHeading";
+import { buttonClasses } from "@/components/ui/button-styles";
 
-const CoreValueCard = ({
-  icon: Icon,
-  title,
-  description,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
-}) => (
-  <div className="flex flex-col items-center text-center border-t-2 border-purple-vivid pt-6">
-    <div className="h-16 w-16 rounded-full bg-lavender flex items-center justify-center mb-4">
-      <Icon className="h-8 w-8 text-purple-vivid" />
-    </div>
-    <h3 className="text-lg font-heading font-bold text-slate mb-2">{title}</h3>
-    <p className="text-sm text-gray-text leading-relaxed">{description}</p>
-  </div>
-);
+const coreValues = [
+  {
+    icon: Heart,
+    title: "God-Interest",
+    description:
+      "We prize the pleasure, priorities, and agenda of God above personal preference and ambition.",
+  },
+  {
+    icon: BookOpen,
+    title: "Word-Cultured",
+    description:
+      "Scripture does not merely inform our doctrine. It forms our habits, identity, and spiritual imagination.",
+  },
+  {
+    icon: Sparkles,
+    title: "Spirit-Led",
+    description:
+      "We stay yielded to the Holy Spirit, cultivating sensitivity, obedience, and holy courage.",
+  },
+  {
+    icon: Crown,
+    title: "Kingdom-Focused",
+    description:
+      "Everything is aimed at advancing Christ's reign in lives, homes, vocations, cities, and nations.",
+  },
+];
 
 export default function AboutPage() {
   return (
-    <main className="w-full">
-      {/* Hero Banner */}
-      <section
-        className="w-full py-28 md:py-36 bg-cover bg-center flex items-center justify-center"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1438032005730-c779502df39b?w=1920&q=80')`,
-          backgroundColor: "rgba(14, 0, 22, 0.84)",
-          backgroundBlendMode: "overlay",
-        }}
-      >
-        <div className="text-center px-4 md:px-6">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
-            Who We Are
-          </h1>
-          <p className="font-serif italic text-off-white text-lg md:text-xl mb-4">
-            Raising Word-cultured Ambassadors
-          </p>
-          <div className="w-20 h-[2px] bg-purple-vivid mx-auto mt-4" />
-        </div>
-      </section>
+    <main className="page-bands">
+      <PageHero
+        eyebrow="About the Embassy"
+        title="We exist to raise Word-cultured ambassadors."
+        subtitle="A people shaped by Scripture, prayer, worship, and Kingdom purpose."
+        description="The Ecclesia Embassy is a vibrant apostolic and prophetic ministry in Abuja, committed to forming believers who know Christ deeply, love His Word thoroughly, and represent Him faithfully in every sphere of life."
+        backgroundImage="https://images.unsplash.com/photo-1438032005730-c779502df39b?w=1920&q=80"
+        actions={[
+          { href: "/about/leadership", label: "Meet the Lead Brother", variant: "primary" },
+          { href: "/about/experience", label: "The Ecclesia Experience", variant: "secondary", onDark: true },
+        ]}
+        stats={[
+          { value: "Word", label: "A house centered on Scripture" },
+          { value: "Kingdom", label: "A people formed for mission" },
+          { value: "Worship", label: "A life poured out before God" },
+        ]}
+      />
 
-      {/* Vision & Mission */}
-      <SectionWrapper variant="white" className="py-16 md:py-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-purple-dark mb-8">
-            The Vision
-          </h2>
+      <SectionWrapper variant="white">
+        <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div>
+            <SectionHeading
+              eyebrow="The Vision"
+              title="Raising Word-cultured ambassadors."
+              description="We believe deep transformation happens when believers are immersed in God's Word, shaped by His presence, and sent into everyday life with clarity and conviction."
+            />
+            <div className="mt-8 space-y-5 text-base leading-8 text-gray-text">
+              <p>
+                At The Ecclesia Embassy, we are building a community where the Word of God is not
+                peripheral but central. We want believers who do not simply visit truth on Sundays,
+                but live from it daily as authentic representatives of Christ.
+              </p>
+              <p>
+                Under the leadership of <span className="font-semibold text-slate">Brother Victor Oluwadamilare</span>,
+                we cultivate an atmosphere where the Holy Spirit is honoured, mature discipleship is
+                normal, and Kingdom service is intentional.
+              </p>
+              <p>
+                Our gatherings are designed to produce people who can carry heaven into their homes,
+                vocations, neighbourhoods, and nation with humility, authority, and love.
+              </p>
+            </div>
+          </div>
 
-          <div className="mb-8">
-            <p className="font-serif italic text-xl md:text-2xl text-purple-vivid mb-2">
-              &ldquo;Raising Word-cultured Ambassadors&rdquo;
+          <div className="mesh-panel rounded-[32px] p-8 shadow-[0_30px_60px_rgba(14,11,30,0.08)]">
+            <p className="font-heading text-xs font-semibold uppercase tracking-[0.28em] text-purple-vivid">
+              Our Mandate
             </p>
+            <h3 className="mt-4 font-heading text-3xl font-bold text-slate">
+              To establish a generation that knows the Word and embodies Christ.
+            </h3>
+            <div className="mt-8 space-y-4 text-sm leading-7 text-gray-text">
+              <p>We are committed to deep biblical literacy, spiritual maturity, and a life of surrendered worship.</p>
+              <p>We serve the Kingdom by forming believers who can think scripturally, pray fervently, and live missionally.</p>
+              <p>We are building not spectators, but servants and ambassadors with substance.</p>
+            </div>
+            <Link
+              href="/new-here"
+              className={buttonClasses({ variant: "primary", className: "mt-8" })}
+            >
+              Worship With Us
+            </Link>
           </div>
-
-          <p className="text-gray-text leading-relaxed mb-6">
-            The Ecclesia Embassy is a vibrant ministry dedicated to fostering a deep, transformative
-            relationship with God's Word. We believe that true spiritual growth comes from immersing
-            ourselves in Scripture and allowing it to shape our identity, values, and purpose. Our
-            mission is to cultivate a community of believers who are not just familiar with the Word
-            of God, but are cultured by it—living as authentic ambassadors of Christ in every sphere
-            of life.
-          </p>
-
-          <p className="text-gray-text leading-relaxed mb-8">
-            Under the leadership of <span className="font-semibold text-slate">Brother Victor Oluwadamilare</span>,
-            our Lead Brother, we are committed to creating an atmosphere where the Word of God is
-            central, the Holy Spirit is honored, and the Kingdom of God is advanced through faithful
-            servants who embody biblical truth.
-          </p>
         </div>
       </SectionWrapper>
 
-      {/* Core Values */}
-      <SectionWrapper variant="off-white" className="py-16 md:py-20">
-        <div className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-slate text-center mb-2">
-            Our Core Values
-          </h2>
-          <p className="text-center text-gray-text">
-            These principles guide our ministry and shape our community
-          </p>
-        </div>
+      <SectionWrapper variant="lavender">
+        <SectionHeading
+          eyebrow="Core Values"
+          title="The convictions that shape our culture."
+          description="These are the anchors that govern our ministry life, our relationships, and the way we respond to God's call."
+          align="center"
+          className="mb-12"
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
-          <CoreValueCard
-            icon={Heart}
-            title="God-Interest"
-            description="We prioritize the interests and glory of God above all else, allowing His will to shape our decisions and direction."
-          />
-          <CoreValueCard
-            icon={BookOpen}
-            title="Word-Cultured"
-            description="We immerse ourselves in Scripture, allowing God's Word to transform our thinking and guide our actions."
-          />
-          <CoreValueCard
-            icon={Sparkles}
-            title="Spirit-Led"
-            description="We yield to the guidance of the Holy Spirit, trusting His wisdom and sensitivity in all we do."
-          />
-          <CoreValueCard
-            icon={Crown}
-            title="Kingdom-Focused"
-            description="We live with an eternal perspective, advancing God's Kingdom and fulfilling His purpose for our lives."
-          />
-        </div>
-      </SectionWrapper>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {coreValues.map((value) => {
+            const Icon = value.icon;
 
-      {/* Apostolic Mandate */}
-      <SectionWrapper variant="dark-purple" className="py-16 md:py-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-6">
-            The Apostolic Mandate
-          </h2>
-
-          <p className="text-white/80 leading-relaxed mb-8">
-            We are committed to equipping believers with deep biblical knowledge and spiritual
-            maturity. The Ecclesia Embassy exists to establish a generation of word-cultured
-            ambassadors—men and women who understand God's Word thoroughly, live it authentically,
-            and represent Christ powerfully in their families, workplaces, and communities. This is
-            our calling, our passion, and our unwavering commitment to the Kingdom of God.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/about/leadership">
-              <Button variant="secondary" onDark>
-                Meet the Lead Brother
-              </Button>
-            </Link>
-            <Link href="/about/experience">
-              <Button variant="secondary" onDark>
-                The Ecclesia Experience
-              </Button>
-            </Link>
-          </div>
+            return (
+              <article key={value.title} className="soft-card rounded-[30px] p-7">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-light">
+                  <Icon className="h-6 w-6 text-purple-vivid" />
+                </div>
+                <h3 className="mt-6 font-heading text-xl font-bold text-slate">{value.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-gray-text">{value.description}</p>
+              </article>
+            );
+          })}
         </div>
       </SectionWrapper>
     </main>

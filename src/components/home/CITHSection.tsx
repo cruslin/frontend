@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { MapPin, Globe, Home } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/ui/Motion";
 
 export default function CITHSection() {
@@ -32,20 +33,16 @@ export default function CITHSection() {
 
   return (
     <SectionWrapper variant="white">
-      <div className="max-w-6xl mx-auto px-4 py-12 md:py-20">
-        {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <FadeIn>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate mb-4">
-              Church in the House
-            </h2>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p className="font-body text-lg text-gray-text max-w-2xl mx-auto">
-              Extending fellowship beyond the building
-            </p>
-          </FadeIn>
-        </div>
+      <div className="py-6 md:py-10">
+        <FadeIn>
+          <SectionHeading
+            eyebrow="Belong Locally"
+            title="Church in the House takes fellowship beyond Sunday."
+            description="Our hubs gather believers by neighbourhood and rhythm, making prayer, accountability, hospitality, and discipleship feel personal."
+            align="center"
+            className="mb-12 md:mb-16"
+          />
+        </FadeIn>
 
         {/* Cards Grid */}
         <StaggerContainer>
@@ -56,9 +53,9 @@ export default function CITHSection() {
                 <StaggerItem key={index}>
                   <HoverLift>
                     <Link href={card.href}>
-                      <div className="rounded-lg border border-gray-border p-8 text-center h-full flex flex-col items-center justify-center hover:shadow-md transition-shadow duration-300">
+                      <div className="soft-card rounded-[30px] p-8 text-center h-full flex flex-col items-center justify-center hover:-translate-y-1 transition-all duration-300">
                         {/* Icon */}
-                        <div className="h-16 w-16 rounded-full bg-purple-light flex items-center justify-center mb-6 mx-auto">
+                        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-purple-light">
                           <IconComponent className="h-8 w-8 text-purple" />
                         </div>
 

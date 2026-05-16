@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
@@ -63,13 +63,13 @@ export default function EcclesialibraryPage() {
     const t = type?.toLowerCase();
     switch (t) {
       case 'book':
-        return 'bg-[#4A1D6E] text-white';
+        return 'bg-[#0E0B1E] text-white';
       case 'bulletin':
-        return 'bg-[#771996] text-white';
+        return 'bg-[#C9A84C] text-white';
       case 'ministry_material':
-        return 'bg-[#E4E0EF] text-[#241A42]';
+        return 'bg-[#E8E6F0] text-[#0E0B1E]';
       default:
-        return 'bg-[#F5F5F5] text-[#31333B]';
+        return 'bg-[#FAFAF8] text-[#0E0B1E]';
     }
   };
 
@@ -149,16 +149,16 @@ export default function EcclesialibraryPage() {
       {/* Hero Section */}
       <section className="relative h-80 flex items-center justify-center overflow-hidden">
         <div
-          className="absolute inset-0 bg-gradient-to-r from-[#241A42] to-[#4A1D6E]"
+          className="absolute inset-0 bg-gradient-to-r from-[#0E0B1E] to-[#0E0B1E]"
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black/35" aria-hidden="true" />
         <div className="relative z-10 text-center px-4">
           <div className="flex justify-center mb-4">
-            <BookOpen className="w-16 h-16 text-[#E4E0EF]" />
+            <BookOpen className="w-16 h-16 text-[#E8E6F0]" />
           </div>
           <h1 className="text-5xl font-bold font-heading text-white mb-4">Ecclesia Library</h1>
-          <p className="text-xl text-[#E4E0EF] mb-6">Books and resources for your growth</p>
+          <p className="text-xl text-[#E8E6F0] mb-6">Books and resources for your growth</p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="https://apps.apple.com/za/app/ecclesia-library/id6753295575"
@@ -203,13 +203,13 @@ export default function EcclesialibraryPage() {
             {/* Search Bar */}
             <div className="mb-12">
               <div className="relative">
-                <Search className="absolute left-4 top-3.5 w-5 h-5 text-[#8A8A8E]" />
+                <Search className="absolute left-4 top-3.5 w-5 h-5 text-[#8A8A90]" />
                 <input
                   type="text"
                   placeholder="Search by title or author..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border-2 border-[#E4E0EF] rounded-lg font-body text-[#31333B] focus:outline-none focus:border-[#771996] transition-colors"
+                  className="w-full pl-12 pr-4 py-3 border-2 border-[#E8E6F0] rounded-lg font-body text-[#0E0B1E] focus:outline-none focus:border-[#C9A84C] transition-colors"
                 />
               </div>
             </div>
@@ -219,8 +219,8 @@ export default function EcclesialibraryPage() {
               <SkeletonGroup count={6} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" />
             ) : filteredItems.length === 0 ? (
               <div className="text-center py-16">
-                <BookOpen className="w-12 h-12 text-[#E4E0EF] mx-auto mb-4" />
-                <p className="text-lg text-[#8A8A8E] font-body">No resources found matching your search.</p>
+                <BookOpen className="w-12 h-12 text-[#E8E6F0] mx-auto mb-4" />
+                <p className="text-lg text-[#8A8A90] font-body">No resources found matching your search.</p>
               </div>
             ) : (
               <StaggerContainer>
@@ -229,9 +229,9 @@ export default function EcclesialibraryPage() {
                     const isFree = item.isFree || !item.price || Number(item.price) === 0;
                     return (
                       <StaggerItem key={item.id}>
-                        <div className="bg-[#F5F5F5] rounded-lg overflow-hidden hover:shadow-lg transition-shadow group h-full flex flex-col">
+                        <div className="bg-[#FAFAF8] rounded-lg overflow-hidden hover:shadow-lg transition-shadow group h-full flex flex-col">
                           {/* Cover Area */}
-                          <div className="bg-gradient-to-br from-[#E4E0EF] to-[#F5F5F5] h-40 flex items-center justify-center group-hover:from-[#771996] group-hover:to-[#4A1D6E] transition-colors relative">
+                          <div className="bg-gradient-to-br from-[#E8E6F0] to-[#FAFAF8] h-40 flex items-center justify-center group-hover:from-[#C9A84C] group-hover:to-[#0E0B1E] transition-colors relative">
                             {item.coverUrl ? (
                               <img
                                 src={item.coverUrl}
@@ -239,7 +239,7 @@ export default function EcclesialibraryPage() {
                                 className="w-full h-full object-cover"
                               />
                             ) : (
-                              <BookOpen className="w-16 h-16 text-[#8A8A8E] group-hover:text-white transition-colors" />
+                              <BookOpen className="w-16 h-16 text-[#8A8A90] group-hover:text-white transition-colors" />
                             )}
                             {/* Price badge */}
                             <div className="absolute top-3 right-3">
@@ -248,7 +248,7 @@ export default function EcclesialibraryPage() {
                                   FREE
                                 </span>
                               ) : (
-                                <span className="bg-[#D4A843] text-white text-xs font-heading font-bold px-3 py-1 rounded-full shadow-sm">
+                                <span className="bg-[#C9A84C] text-white text-xs font-heading font-bold px-3 py-1 rounded-full shadow-sm">
                                   {formatPrice(item.price)}
                                 </span>
                               )}
@@ -263,16 +263,16 @@ export default function EcclesialibraryPage() {
                               </span>
                             </div>
 
-                            <h3 className="text-lg font-heading font-bold text-[#241A42] mb-2">
+                            <h3 className="text-lg font-heading font-bold text-[#0E0B1E] mb-2">
                               {item.title}
                             </h3>
 
-                            <p className="text-sm text-[#8A8A8E] font-body mb-3">
+                            <p className="text-sm text-[#8A8A90] font-body mb-3">
                               By {item.author}
                             </p>
 
                             {item.description && (
-                              <p className="text-sm text-[#8A8A8E] font-body mb-4 line-clamp-2">
+                              <p className="text-sm text-[#8A8A90] font-body mb-4 line-clamp-2">
                                 {item.description}
                               </p>
                             )}
@@ -282,7 +282,7 @@ export default function EcclesialibraryPage() {
                               {isFree ? (
                                 <button
                                   onClick={() => handleDownload(item)}
-                                  className="w-full inline-flex items-center justify-center gap-2 bg-[#771996] hover:bg-[#4A1D6E] text-white font-heading font-semibold py-2.5 px-4 rounded-lg transition-colors"
+                                  className="w-full inline-flex items-center justify-center gap-2 bg-[#C9A84C] hover:bg-[#0E0B1E] text-white font-heading font-semibold py-2.5 px-4 rounded-lg transition-colors"
                                 >
                                   <Download className="w-4 h-4" />
                                   Download Free
@@ -291,7 +291,7 @@ export default function EcclesialibraryPage() {
                                 <button
                                   onClick={() => handlePurchase(item)}
                                   disabled={purchasingId === item.id}
-                                  className="w-full inline-flex items-center justify-center gap-2 bg-[#D4A843] hover:bg-[#B8912F] text-white font-heading font-semibold py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50"
+                                  className="w-full inline-flex items-center justify-center gap-2 bg-[#C9A84C] hover:bg-[#B8912F] text-white font-heading font-semibold py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50"
                                 >
                                   {purchasingId === item.id ? (
                                     <>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
@@ -71,13 +71,13 @@ export default function VideoMessagesPage() {
           </div>
         ) : error ? (
           <div className="py-12 text-center">
-            <p className="font-body text-base" style={{ color: '#8A8A8E' }}>
+            <p className="font-body text-base" style={{ color: '#8A8A90' }}>
               {error}
             </p>
           </div>
         ) : videoMessages.length === 0 ? (
           <div className="py-12 text-center">
-            <p className="font-body text-base" style={{ color: '#8A8A8E' }}>
+            <p className="font-body text-base" style={{ color: '#8A8A90' }}>
               No video messages available yet.
             </p>
           </div>
@@ -88,8 +88,8 @@ export default function VideoMessagesPage() {
                 <div
                   className="rounded-lg overflow-hidden border transition-all duration-300 hover:shadow-lg"
                   style={{
-                    backgroundColor: '#F5F5F5',
-                    borderColor: '#E4E0EF',
+                    backgroundColor: '#FAFAF8',
+                    borderColor: '#E8E6F0',
                   }}
                 >
                   {/* Video Thumbnail */}
@@ -108,7 +108,7 @@ export default function VideoMessagesPage() {
                   <div className="p-6">
                     <h3
                       className="font-heading text-lg font-semibold mb-3 line-clamp-2"
-                      style={{ color: '#31333B' }}
+                      style={{ color: '#0E0B1E' }}
                     >
                       {video.title}
                     </h3>
@@ -117,7 +117,7 @@ export default function VideoMessagesPage() {
                       {video.speaker && (
                         <p
                           className="font-body text-sm"
-                          style={{ color: '#8A8A8E' }}
+                          style={{ color: '#8A8A90' }}
                         >
                           {video.speaker}
                         </p>
@@ -125,7 +125,7 @@ export default function VideoMessagesPage() {
 
                       <p
                         className="font-body text-sm"
-                        style={{ color: '#8A8A8E' }}
+                        style={{ color: '#8A8A90' }}
                       >
                         {new Date(
                           video.createdAt || video.date || 0
@@ -137,8 +137,8 @@ export default function VideoMessagesPage() {
                           <span
                             className="inline-block px-3 py-1 rounded-full text-xs font-heading font-semibold"
                             style={{
-                              backgroundColor: '#E4E0EF',
-                              color: '#4A1D6E',
+                              backgroundColor: '#E8E6F0',
+                              color: '#0E0B1E',
                             }}
                           >
                             {video.series}

@@ -15,8 +15,6 @@ function VerifyEmailContent() {
 
   useEffect(() => {
     if (!token) {
-      setStatus("error");
-      setMessage("No verification token provided.");
       return;
     }
 
@@ -38,10 +36,15 @@ function VerifyEmailContent() {
     verify();
   }, [token]);
 
+  const resolvedStatus = token ? status : "error";
+  const resolvedMessage = token
+    ? message
+    : "No verification token provided.";
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-off-white px-4">
       <div className="w-full max-w-md rounded-[8px] border border-gray-border bg-white p-8 shadow-sm text-center">
-        {status === "loading" && (
+        {resolvedStatus === "loading" && (
           <>
             <Loader2 className="mx-auto h-12 w-12 text-purple animate-spin mb-4" />
             <h2 className="font-heading text-xl font-bold text-slate">
@@ -53,26 +56,26 @@ function VerifyEmailContent() {
           </>
         )}
 
-        {status === "success" && (
+        {resolvedStatus === "success" && (
           <>
             <CheckCircle className="mx-auto h-12 w-12 text-success mb-4" />
             <h2 className="font-heading text-xl font-bold text-success">
               Email Verified!
             </h2>
-            <p className="mt-2 font-body text-sm text-gray-text">{message}</p>
+            <p className="mt-2 font-body text-sm text-gray-text">{resolvedMessage}</p>
             <Link href="/auth/login" className="mt-6 inline-block">
               <Button variant="primary">Go to Login</Button>
             </Link>
           </>
         )}
 
-        {status === "error" && (
+        {resolvedStatus === "error" && (
           <>
             <XCircle className="mx-auto h-12 w-12 text-error mb-4" />
             <h2 className="font-heading text-xl font-bold text-error">
               Verification Failed
             </h2>
-            <p className="mt-2 font-body text-sm text-gray-text">{message}</p>
+            <p className="mt-2 font-body text-sm text-gray-text">{resolvedMessage}</p>
             <div className="mt-6 flex flex-col gap-3">
               <Link href="/auth/signup">
                 <Button variant="primary" className="w-full">

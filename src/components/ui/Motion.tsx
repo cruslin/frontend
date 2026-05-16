@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, Variants, useInView, useReducedMotion } from "framer-motion";
+import { motion, Variants, useInView } from "framer-motion";
 import { ReactNode, useRef } from "react";
 
 /* ============================================
@@ -35,7 +35,6 @@ export function FadeIn({
 }: FadeInProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once, margin: "-50px" });
-  const shouldReduce = useReducedMotion();
 
   const directionMap = {
     up: { y: distance },
@@ -44,10 +43,6 @@ export function FadeIn({
     right: { x: -distance },
     none: {},
   };
-
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
 
   return (
     <motion.div
@@ -112,17 +107,12 @@ interface StaggerItemProps {
 }
 
 export function StaggerItem({ children, className, direction = "up" }: StaggerItemProps) {
-  const shouldReduce = useReducedMotion();
   const dirMap = {
     up: { y: 24 },
     down: { y: -24 },
     left: { x: 24 },
     right: { x: -24 },
   };
-
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
 
   return (
     <motion.div
@@ -148,11 +138,6 @@ interface ScaleInProps {
 export function ScaleIn({ children, delay = 0, className, once = true }: ScaleInProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once, margin: "-50px" });
-  const shouldReduce = useReducedMotion();
-
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
 
   return (
     <motion.div
@@ -209,12 +194,6 @@ interface PageTransitionProps {
 }
 
 export function PageTransition({ children, className }: PageTransitionProps) {
-  const shouldReduce = useReducedMotion();
-
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
     <motion.div
       className={className}
@@ -235,12 +214,6 @@ interface HeroTextProps {
 }
 
 export function HeroText({ children, className, delay = 0 }: HeroTextProps) {
-  const shouldReduce = useReducedMotion();
-
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
     <motion.div
       className={className}
@@ -307,12 +280,6 @@ export function ShimmerLine({ className }: { className?: string }) {
 
 // ---- Floating element (subtle bob animation) ----
 export function Float({ children, className }: { children: ReactNode; className?: string }) {
-  const shouldReduce = useReducedMotion();
-
-  if (shouldReduce) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
     <motion.div
       className={className}

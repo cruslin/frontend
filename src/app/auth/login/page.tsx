@@ -1,7 +1,6 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -23,7 +22,6 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -43,30 +41,33 @@ export default function LoginPage() {
     setErrorMessage(null);
 
     try {
-      const response = await auth.login(
-        data.email,
-        data.password,
-      ) as any;
-
+      const response = await auth.login(data.email, data.password);
       const token = response.access_token || response.token;
-      if (token) {
-        setToken(token);
-        reset();
-        const role = response.user?.role;
-        if (role === 'ADMIN' || role === 'SUPER_ADMIN') {
-          window.location.href = '/admin';
-        } else {
-          window.location.href = '/dashboard';
-        }
-      } else {
+
+      if (!token) {
         setErrorMessage('Login succeeded but no token received. Please try again.');
+        return;
       }
-    } catch (error: any) {
-      const statusCode = error?.response?.status;
-      if (statusCode === 401) {
+
+      setToken(token);
+      reset();
+
+      const destination =
+        response.user?.role === 'ADMIN' || response.user?.role === 'SUPER_ADMIN'
+          ? '/admin'
+          : '/dashboard';
+
+      window.location.assign(destination);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'An error occurred. Please try again.';
+
+      if (message.includes('401') || /invalid/i.test(message)) {
         setErrorMessage('Invalid email or password');
       } else {
-        setErrorMessage(error?.message || 'An error occurred. Please try again.');
+        setErrorMessage(message);
       }
     } finally {
       setIsLoading(false);
@@ -75,14 +76,12 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen bg-off-white overflow-hidden">
-      {/* LEFT SIDE - Hero Section */}
       <div
         className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-8 relative overflow-hidden"
         style={{
-          background: `linear-gradient(135deg, #241A42 0%, #4A1D6E 50%, #771996 100%)`,
+          background: 'linear-gradient(135deg, #0E0B1E 0%, #0E0B1E 50%, #C9A84C 100%)',
         }}
       >
-        {/* Background Image with Overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -92,7 +91,6 @@ export default function LoginPage() {
         />
         <div className="absolute inset-0 bg-[rgba(14,0,22,0.6)]" />
 
-        {/* Content */}
         <div className="relative z-10 max-w-sm text-center text-off-white">
           <FadeIn>
             <HeroText className="text-5xl md:text-6xl font-heading font-bold mb-6 text-off-white leading-tight">
@@ -102,22 +100,22 @@ export default function LoginPage() {
 
           <FadeIn delay={0.1}>
             <p className="text-lg font-body text-off-white/90 mb-8 leading-relaxed">
-              Welcome to our faith community. Step into a space where spiritual growth, connection, and purpose converge.
+              Welcome to our faith community. Step into a space where spiritual
+              growth, connection, and purpose converge.
             </p>
           </FadeIn>
 
           <FadeIn delay={0.2}>
             <p className="text-base font-serif italic text-off-white/80 leading-relaxed">
-              "In community we find strength, in faith we find purpose, in love we find home."
+              "In community we find strength, in faith we find purpose, in love we
+              find home."
             </p>
           </FadeIn>
         </div>
       </div>
 
-      {/* RIGHT SIDE - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-8 overflow-y-auto">
         <div className="w-full max-w-md py-8">
-          {/* Mobile Branding */}
           <div className="lg:hidden mb-8 text-center">
             <h1 className="text-2xl md:text-3xl font-heading font-bold text-slate mb-2">
               The Ecclesia Embassy
@@ -125,21 +123,18 @@ export default function LoginPage() {
             <p className="text-gray-text font-body text-sm">Sign in to your account</p>
           </div>
 
-          {/* Heading */}
           <FadeIn>
             <h2 className="hidden lg:block text-3xl font-heading font-bold text-slate mb-2">
               Welcome Back
             </h2>
           </FadeIn>
 
-          {/* Subtitle */}
           <FadeIn delay={0.1}>
             <p className="hidden lg:block text-gray-text font-body text-sm mb-8">
               Sign in to continue to your account
             </p>
           </FadeIn>
 
-          {/* Error Message */}
           {errorMessage && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -150,12 +145,13 @@ export default function LoginPage() {
             </motion.div>
           )}
 
-          {/* Form */}
           <FadeIn delay={0.2}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-body font-medium text-slate mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-body font-medium text-slate mb-2"
+                >
                   Email Address
                 </label>
                 <div className="relative">
@@ -169,13 +165,17 @@ export default function LoginPage() {
                   />
                 </div>
                 {errors.email && (
-                  <p className="text-error text-xs font-body mt-1">{errors.email.message}</p>
+                  <p className="text-error text-xs font-body mt-1">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
-              {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-body font-medium text-slate mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-body font-medium text-slate mb-2"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -183,7 +183,7 @@ export default function LoginPage() {
                   <Input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
+                    placeholder="Enter your password"
                     className="pl-10 pr-10 border-lavender focus:border-purple-vivid"
                     {...register('password')}
                   />
@@ -200,11 +200,12 @@ export default function LoginPage() {
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-error text-xs font-body mt-1">{errors.password.message}</p>
+                  <p className="text-error text-xs font-body mt-1">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
-              {/* Remember Me & Forgot Password */}
               <div className="flex items-center justify-between pt-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <Checkbox {...register('rememberMe')} className="border-lavender" />
@@ -218,7 +219,6 @@ export default function LoginPage() {
                 </Link>
               </div>
 
-              {/* Submit Button */}
               <Button
                 type="submit"
                 disabled={isLoading}
@@ -240,7 +240,6 @@ export default function LoginPage() {
             </form>
           </FadeIn>
 
-          {/* Sign Up Link */}
           <FadeIn delay={0.3}>
             <p className="text-center text-gray-text font-body text-sm mt-6">
               Don't have an account?{' '}

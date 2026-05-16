@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
@@ -39,10 +39,10 @@ export default function EHubPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F5F5F5]">
+    <main className="min-h-screen bg-[#FAFAF8]">
       {/* Hero Section */}
       <section
-        className="relative h-96 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#4A1D6E] to-[#771996]"
+        className="relative h-96 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0E0B1E] to-[#C9A84C]"
       >
         <div className="absolute inset-0 bg-black/20"></div>
         <FadeIn>
@@ -50,7 +50,7 @@ export default function EHubPage() {
             <h1 className="font-heading text-5xl md:text-6xl font-bold text-white mb-4">
               Join the e-Hub
             </h1>
-            <p className="font-body text-xl md:text-2xl text-[#F5F5F5]">
+            <p className="font-body text-xl md:text-2xl text-[#FAFAF8]">
               Connect from anywhere in the world
             </p>
           </div>
@@ -62,11 +62,11 @@ export default function EHubPage() {
         <div className="mx-auto max-w-xl">
           <FadeIn>
             <div className="text-center mb-8">
-              <Globe className="mx-auto h-12 w-12 text-[#771996] mb-3" />
-              <h2 className="font-heading text-3xl font-bold text-[#241A42] mb-3">
+              <Globe className="mx-auto h-12 w-12 text-[#C9A84C] mb-3" />
+              <h2 className="font-heading text-3xl font-bold text-[#0E0B1E] mb-3">
                 e-Hub Registration
               </h2>
-              <p className="font-body text-sm text-[#8A8A8E]">
+              <p className="font-body text-sm text-[#8A8A90]">
                 No physical hub nearby? Join our online community and participate
                 in virtual fellowship meetings from anywhere in the world.
               </p>
@@ -78,14 +78,14 @@ export default function EHubPage() {
                 <h3 className="font-heading text-xl font-bold text-[#27AE60] mb-2">
                   Registration Successful!
                 </h3>
-                <p className="font-body text-sm text-[#8A8A8E] mb-6">
+                <p className="font-body text-sm text-[#8A8A90] mb-6">
                   Check your email for your virtual meeting schedule and links.
                   Welcome to the e-Hub community!
                 </p>
                 <Button
                   variant="primary"
                   onClick={() => setSubmitted(false)}
-                  className="bg-[#771996] hover:bg-[#4A1D6E]"
+                  className="bg-[#C9A84C] hover:bg-[#0E0B1E]"
                 >
                   Register Another Person
                 </Button>
@@ -130,13 +130,13 @@ export default function EHubPage() {
                   required
                 />
                 <div>
-                  <label htmlFor="referral" className="block text-sm font-heading font-bold text-[#241A42] mb-2">
+                  <label htmlFor="referral" className="block text-sm font-heading font-bold text-[#0E0B1E] mb-2">
                     How did you hear about us?
                   </label>
                   <select
                     id="referral"
                     name="referral"
-                    className="w-full px-4 py-2 border border-[#E4E0EF] rounded-lg text-[#31333B] font-body focus:outline-none focus:ring-2 focus:ring-[#771996]"
+                    className="w-full px-4 py-2 border border-[#E8E6F0] rounded-lg text-[#0E0B1E] font-body focus:outline-none focus:ring-2 focus:ring-[#C9A84C]"
                     required
                   >
                     <option value="">Select an option</option>
@@ -150,7 +150,7 @@ export default function EHubPage() {
                 <Button
                   type="submit"
                   variant="primary"
-                  className="w-full mt-2 bg-[#771996] hover:bg-[#4A1D6E]"
+                  className="w-full mt-2 bg-[#C9A84C] hover:bg-[#0E0B1E]"
                   disabled={isLoading}
                 >
                   {isLoading ? 'Joining...' : 'Join the e-Hub'}

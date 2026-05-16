@@ -1,14 +1,41 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import PageHero from '@/components/ui/PageHero';
 import SectionWrapper from '@/components/ui/SectionWrapper';
+import SectionHeading from '@/components/ui/SectionHeading';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Button from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/Motion';
+import { buttonClasses } from '@/components/ui/button-styles';
 import { MapPin, Clock, Shirt, Heart, CheckCircle } from 'lucide-react';
 import { firstTimer } from '@/lib/api';
+
+const expectCards = [
+  {
+    icon: Heart,
+    title: "Warm Welcome",
+    description: "You'll be greeted warmly by our community. We're here to make you feel at home from the moment you arrive.",
+  },
+  {
+    icon: Shirt,
+    title: "Come As You Are",
+    description: "There's no dress code. Just bring yourself and an open heart — God meets us where we are.",
+  },
+  {
+    icon: Clock,
+    title: "Service Times",
+    description: "Sunday Worship at 8:00 AM. Join us for worship, the Word, and genuine community.",
+  },
+  {
+    icon: MapPin,
+    title: "Our Location",
+    description: "Sarki Tafida Street, Guzape Hills, Asokoro, Abuja. We look forward to welcoming you in person.",
+  },
+];
 
 export default function NewHerePage() {
   const { success, error } = useToast();
@@ -44,7 +71,7 @@ export default function NewHerePage() {
         setFormData({ fullName: '', email: '', phone: '', source: '' });
         setIsSuccess(false);
       }, 3000);
-    } catch (err) {
+    } catch {
       error('Something went wrong. Please try again.');
     } finally {
       setIsLoading(false);
@@ -52,237 +79,177 @@ export default function NewHerePage() {
   };
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section
-        className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=1920&q=80)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 px-4">
-          <FadeIn>
-            <h1 className="font-heading text-6xl md:text-7xl font-bold mb-4">
-              Welcome to The Ecclesia Embassy
-            </h1>
-            <p className="font-body text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto">
-              We're glad you're here
-            </p>
-          </FadeIn>
-        </div>
-      </section>
+    <main className="page-bands">
+      <PageHero
+        eyebrow="New Here?"
+        title="Welcome to The Ecclesia Embassy."
+        subtitle="We're glad you're here."
+        description="Whether this is your first Sunday or your first step toward a deeper faith community — you are welcome. Let us know you're coming and we'll be ready for you."
+        backgroundImage="https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=1920&q=80"
+        actions={[
+          { href: "#plan", label: "Tell Us You're Coming", variant: "primary" },
+          { href: "/contact", label: "Get in Touch", variant: "secondary", onDark: true },
+        ]}
+      />
 
-      {/* What to Expect Section */}
-      <SectionWrapper variant="white" className="py-20">
-        <FadeIn>
-          <h2 className="font-heading text-4xl font-bold text-center mb-4" style={{ color: '#4A1D6E' }}>
-            What to Expect
-          </h2>
-          <p className="font-body text-center text-gray-text mb-12 max-w-2xl mx-auto">
-            We want you to feel comfortable from the moment you walk through our doors.
-          </p>
-        </FadeIn>
+      {/* What to expect */}
+      <SectionWrapper variant="white">
+        <SectionHeading
+          eyebrow="What to Expect"
+          title="We want you to feel at home."
+          description="We want you to feel comfortable from the moment you walk through our doors. Here's what a Sunday looks like."
+          align="center"
+          className="mx-auto mb-14"
+        />
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Warm Welcome Card */}
-          <StaggerItem>
-            <div
-              className="p-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg"
-              style={{ backgroundColor: '#E4E0EF' }}
-            >
-              <div className="flex justify-center mb-4">
-                <Heart
-                  size={40}
-                  style={{ color: '#771996' }}
-                />
-              </div>
-              <h3 className="font-heading text-lg font-bold mb-2" style={{ color: '#4A1D6E' }}>
-                Warm Welcome
-              </h3>
-              <p className="font-body text-sm text-gray-text">
-                You'll be greeted warmly by our community. We're here to make you feel at home.
-              </p>
-            </div>
-          </StaggerItem>
+        <StaggerContainer>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {expectCards.map((card) => {
+              const Icon = card.icon;
 
-          {/* Casual Dress Card */}
-          <StaggerItem>
-            <div
-              className="p-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg"
-              style={{ backgroundColor: '#E4E0EF' }}
-            >
-              <div className="flex justify-center mb-4">
-                <Shirt
-                  size={40}
-                  style={{ color: '#771996' }}
-                />
-              </div>
-              <h3 className="font-heading text-lg font-bold mb-2" style={{ color: '#4A1D6E' }}>
-                Casual Dress
-              </h3>
-              <p className="font-body text-sm text-gray-text">
-                Come as you are. There's no dress code—just bring yourself and an open heart.
-              </p>
-            </div>
-          </StaggerItem>
-
-          {/* Service Times Card */}
-          <StaggerItem>
-            <div
-              className="p-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg"
-              style={{ backgroundColor: '#E4E0EF' }}
-            >
-              <div className="flex justify-center mb-4">
-                <Clock
-                  size={40}
-                  style={{ color: '#771996' }}
-                />
-              </div>
-              <h3 className="font-heading text-lg font-bold mb-2" style={{ color: '#4A1D6E' }}>
-                Service Times
-              </h3>
-              <p className="font-body text-sm text-gray-text">
-                Sunday 8:00 AM. Join us for worship, community, and growth in faith.
-              </p>
-            </div>
-          </StaggerItem>
-
-          {/* Location Card */}
-          <StaggerItem>
-            <div
-              className="p-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg"
-              style={{ backgroundColor: '#E4E0EF' }}
-            >
-              <div className="flex justify-center mb-4">
-                <MapPin
-                  size={40}
-                  style={{ color: '#771996' }}
-                />
-              </div>
-              <h3 className="font-heading text-lg font-bold mb-2" style={{ color: '#4A1D6E' }}>
-                Location
-              </h3>
-              <p className="font-body text-sm text-gray-text">
-                Abuja, Nigeria. Find us easily and start your journey with us today.
-              </p>
-            </div>
-          </StaggerItem>
+              return (
+                <StaggerItem key={card.title}>
+                  <article className="soft-card rounded-[30px] p-7 text-center">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-purple-light">
+                      <Icon className="h-6 w-6 text-purple-vivid" />
+                    </div>
+                    <h3 className="mt-6 font-heading text-lg font-bold text-slate">{card.title}</h3>
+                    <p className="mt-3 font-body text-sm leading-7 text-gray-text">{card.description}</p>
+                  </article>
+                </StaggerItem>
+              );
+            })}
+          </div>
         </StaggerContainer>
       </SectionWrapper>
 
-      {/* First Timer Form Section */}
-      <SectionWrapper variant="off-white" className="py-20">
-        <FadeIn>
-          <div className="max-w-xl mx-auto">
+      {/* First-timer form */}
+      <SectionWrapper variant="lavender" id="plan">
+        <div className="mx-auto max-w-xl">
+          <FadeIn>
             {!isSuccess ? (
               <>
-                <h2 className="font-heading text-4xl font-bold text-center mb-2" style={{ color: '#4A1D6E' }}>
-                  Tell Us About Yourself
-                </h2>
-                <p className="font-body text-center text-gray-text mb-8">
-                  Help us get to know you better so we can serve you more effectively.
-                </p>
+                <SectionHeading
+                  eyebrow="Plan Your Visit"
+                  title="Tell us about yourself."
+                  description="Help us get to know you so we can serve you well when you arrive."
+                  align="center"
+                  className="mx-auto mb-10"
+                />
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <Input
-                    type="text"
-                    name="fullName"
-                    placeholder="Full Name"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <label className="mb-2 block font-heading text-xs font-semibold uppercase tracking-[0.2em] text-slate">
+                      Full Name
+                    </label>
+                    <Input
+                      type="text"
+                      name="fullName"
+                      placeholder="Your full name"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
 
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <div>
+                    <label className="mb-2 block font-heading text-xs font-semibold uppercase tracking-[0.2em] text-slate">
+                      Email Address
+                    </label>
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="your@email.com"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
 
-                  <Input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <div>
+                    <label className="mb-2 block font-heading text-xs font-semibold uppercase tracking-[0.2em] text-slate">
+                      Phone Number
+                    </label>
+                    <Input
+                      type="tel"
+                      name="phone"
+                      placeholder="+234..."
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
 
-                  <Select
-                    name="source"
-                    value={formData.source}
-                    onChange={handleInputChange}
-                    placeholder="How did you hear about us?"
-                    options={[
-                      { value: 'social-media', label: 'Social Media' },
-                      { value: 'friend-family', label: 'Friend/Family' },
-                      { value: 'website', label: 'Website' },
-                      { value: 'walk-in', label: 'Walk-in' },
-                      { value: 'other', label: 'Other' },
-                    ]}
-                    required
-                  />
+                  <div>
+                    <label className="mb-2 block font-heading text-xs font-semibold uppercase tracking-[0.2em] text-slate">
+                      How did you hear about us?
+                    </label>
+                    <Select
+                      name="source"
+                      value={formData.source}
+                      onChange={handleInputChange}
+                      placeholder="Select an option"
+                      options={[
+                        { value: 'social-media', label: 'Social Media' },
+                        { value: 'friend-family', label: 'Friend / Family' },
+                        { value: 'website', label: 'Website' },
+                        { value: 'walk-in', label: 'Walk-in' },
+                        { value: 'other', label: 'Other' },
+                      ]}
+                      required
+                    />
+                  </div>
 
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full"
-                    style={{
-                      backgroundColor: isLoading ? '#8A8A8E' : '#4A1D6E',
-                    }}
+                    className="mt-2 w-full"
                   >
                     {isLoading ? 'Submitting...' : 'Submit'}
                   </Button>
                 </form>
               </>
             ) : (
-              <div className="text-center py-12">
-                <div className="flex justify-center mb-4">
-                  <CheckCircle
-                    size={64}
-                    style={{ color: '#771996' }}
-                  />
+              <div className="py-16 text-center">
+                <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-purple-light">
+                  <CheckCircle className="h-10 w-10 text-purple-vivid" />
                 </div>
-                <h3 className="font-heading text-2xl font-bold mb-2" style={{ color: '#4A1D6E' }}>
+                <h3 className="font-heading text-2xl font-bold text-slate">
                   Welcome to our family!
                 </h3>
-                <p className="font-body text-gray-text">
+                <p className="mt-3 font-body text-gray-text">
                   Thank you for sharing your details. We look forward to meeting you on Sunday!
                 </p>
               </div>
             )}
-          </div>
-        </FadeIn>
+          </FadeIn>
+        </div>
       </SectionWrapper>
 
       {/* New Convert CTA */}
-      <SectionWrapper variant="dark-purple" className="py-16">
+      <SectionWrapper variant="dark-purple">
         <FadeIn>
-          <div className="text-center max-w-2xl mx-auto">
-            <Heart size={40} className="mx-auto mb-4 text-white/80" />
-            <h2 className="font-heading text-3xl font-bold text-white mb-4">
-              Just Gave Your Life to Christ?
-            </h2>
-            <p className="font-body text-white/80 mb-8">
-              Congratulations! We want to walk with you on this new journey. Fill
-              out our New Convert form so we can connect you to a growth track,
-              a squad, and a community hub near you.
-            </p>
-            <a
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
+              <Heart className="h-6 w-6 text-gold" />
+            </div>
+            <SectionHeading
+              eyebrow="Just Said Yes to Jesus?"
+              title="Just gave your life to Christ?"
+              description="Congratulations! We want to walk with you on this new journey. Fill out our New Convert form so we can connect you to a growth track, a squad, and a community hub near you."
+              align="center"
+              className="mx-auto"
+              titleClassName="text-white"
+            />
+            <Link
               href="/new-here/new-convert"
-              className="inline-flex items-center justify-center font-heading text-[13px] font-semibold uppercase tracking-[1.5px] leading-4 bg-white text-purple-dark hover:bg-off-white rounded-[4px] px-8 py-3 transition-all duration-200"
+              className={buttonClasses({ variant: "primary", className: "mt-8" })}
             >
               Start Your Journey
-            </a>
+            </Link>
           </div>
         </FadeIn>
       </SectionWrapper>
-    </div>
+    </main>
   );
 }
